@@ -4,7 +4,7 @@ const initialState = {
   counter: 0,
 };
 
-function rootReducer(prevState, action) {
+function rootReducer(prevState : any, action: { type: string }) {
   if (typeof prevState === 'undefined') {
     return initialState;
   }

@@ -2,7 +2,7 @@ import React from 'react'
 import { increment } from "../actions/actions";
 import { connect } from "react-redux";
 
-const App = (props) => {
+const App = (props : any) => {
 
   return (
     <div>
@@ -11,7 +11,7 @@ const App = (props) => {
   )
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: any) => {
   return {
     counter: state.counter
   };
