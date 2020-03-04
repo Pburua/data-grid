@@ -1,13 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { increment } from '../actions/actions';
+import UserTable from './UserTable/UserTable';
 
 const App = (props: any) => {
-  const counter = { props };
+  const { counter } = props;
 
   return (
     <div>
       <h1 onClick={increment}>{counter}</h1>
+      <UserTable />
     </div>
   );
 };
