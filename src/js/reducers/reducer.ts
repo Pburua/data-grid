@@ -1,4 +1,4 @@
-import { INCREMENT } from "../actions/actionTypes";
+import { INCREMENT } from '../actions/actionTypes';
 
 const initialState = {
   counter: 0,
@@ -11,11 +11,9 @@ function rootReducer(prevState : any, action: { type: string }) {
 
   switch (action.type) {
     case INCREMENT:
-      return Object.assign({}, prevState, {
-        counter: prevState.counter + 1,
-      });
+      return { ...prevState, counter: prevState.counter + 1 };
     default:
-      return prevState
+      return prevState;
   }
 }
 

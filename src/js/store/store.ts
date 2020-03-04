@@ -1,6 +1,6 @@
 import { createStore } from 'redux';
-import rootReducer from '../reducers/reducer';
 import { devToolsEnhancer } from 'redux-devtools-extension/logOnlyInProduction';
+import rootReducer from '../reducers/reducer';
 
 // @ts-ignore
 const store = createStore(rootReducer, devToolsEnhancer());
