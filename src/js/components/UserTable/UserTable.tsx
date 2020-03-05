@@ -13,9 +13,22 @@ import { connect } from 'react-redux';
 import './UserTable.scss';
 import UserRow from '../UserRow/UserRow';
 
+function UnVirtualizedList(Row, itemCount) {
+  const rows: JSX.Element [] = [];
+
+  for (let i = 0; i < itemCount + 1; i += 1) {
+    rows.push(<Row key={i} index={i} />);
+  }
+
+  return (
+    <div className="table__ceil-container">
+      {rows}
+    </div>
+  );
+}
+
 const UserTable = (props: any) => {
   const { isVirtualizeOn } = props;
-  console.log(isVirtualizeOn);
 
   return (
     <TableContainer className="table-container" component={Paper}>
@@ -32,18 +45,22 @@ const UserTable = (props: any) => {
         </TableHead>
 
         <TableBody className="table__body" component="div">
-          <AutoSizer>
-            {({ height, width }) => (
-              <VirtualizedList
-                height={height}
-                width={width}
-                itemCount={50}
-                itemSize={47}
-              >
-                {UserRow}
-              </VirtualizedList>
-            )}
-          </AutoSizer>
+          {isVirtualizeOn
+            ? (
+              <AutoSizer>
+                {({ height, width }) => (
+                  <VirtualizedList
+                    height={height}
+                    width={width}
+                    itemCount={50}
+                    itemSize={53}
+                  >
+                    {UserRow}
+                  </VirtualizedList>
+                )}
+              </AutoSizer>
+            )
+            : UnVirtualizedList(UserRow, 50)}
         </TableBody>
 
       </Table>

@@ -1,6 +1,7 @@
 .table-container {
  height: 500px;
  overflow-x: scroll;
+ overflow-y: hidden;
 }
 
 .table {
@@ -17,5 +18,15 @@
   &.name {
    min-width: 170px;
   }
+ }
+
+ &__body {
+  max-height: 500px;
+  overflow-y: scroll;
+ }
+
+ &__ceil-container {
+  height: 500px;
+  overflow-y: scroll;
  }
 }
