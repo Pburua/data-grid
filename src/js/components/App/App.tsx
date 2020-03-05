@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { increment } from '../actions/actions';
-import UserTable from './UserTable/UserTable';
+import { increment } from '../../actions/actions';
+import UserTable from '../UserTable/UserTable';
+import VirtualizationSwitcher from '../VirtualizationSwitcher/VirtualizationSwitcher';
 
 const App = (props: any) => {
   const { counter } = props;
@@ -10,6 +11,7 @@ const App = (props: any) => {
     <>
       <h1 onClick={increment}>{counter}</h1>
       <UserTable />
+      <VirtualizationSwitcher />
     </>
   );
 };

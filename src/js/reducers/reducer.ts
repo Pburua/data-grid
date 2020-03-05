@@ -1,7 +1,8 @@
-import { INCREMENT } from '../actions/actionTypes';
+import { INCREMENT, TOGGLE_VIRTUALIZATION } from '../actions/actionTypes';
 
 const initialState = {
   counter: 0,
+  isVirtualizeOn: true,
 };
 
 function rootReducer(prevState : any, action: { type: string }) {
@@ -12,6 +13,8 @@ function rootReducer(prevState : any, action: { type: string }) {
   switch (action.type) {
     case INCREMENT:
       return { ...prevState, counter: prevState.counter + 1 };
+    case TOGGLE_VIRTUALIZATION:
+      return { ...prevState, isVirtualizeOn: !prevState.isVirtualizeOn };
     default:
       return prevState;
   }

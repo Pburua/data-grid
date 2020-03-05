@@ -1,4 +1,4 @@
 const INCREMENT = 'INCREMENT';
+const TOGGLE_VIRTUALIZATION = 'TOGGLE_VIRTUALIZATION';
 
-// eslint-disable-next-line import/prefer-default-export
-export { INCREMENT };
+export { INCREMENT, TOGGLE_VIRTUALIZATION };
