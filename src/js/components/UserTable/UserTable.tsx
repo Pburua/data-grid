@@ -7,31 +7,36 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { FixedSizeList as List } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
 
 import './UserTable.scss';
 import UserRow from '../UserRow/UserRow';
 
 const UserTable = () => (
   <TableContainer className="table-container" component={Paper}>
-    <Table aria-label="simple table" component="div">
-      <TableHead component="div">
-        <TableRow component="div">
-          <TableCell component="div">Dessert (100g serving)</TableCell>
-          <TableCell component="div" align="right">Calories</TableCell>
-          <TableCell component="div" align="right">Fat&nbsp;(g)</TableCell>
-          <TableCell component="div" align="right">Carbs&nbsp;(g)</TableCell>
-          <TableCell component="div" align="right">Protein&nbsp;(g)</TableCell>
+    <Table className="table" aria-label="simple table" component="div">
+      <TableHead className="table__head" component="div">
+        <TableRow className="table__row" component="div">
+          <TableCell className="table__cell name" component="div">Name</TableCell>
+          <TableCell className="table__cell" component="div" align="right">Int</TableCell>
+          <TableCell className="table__cell" component="div" align="right">Int</TableCell>
+          <TableCell className="table__cell" component="div" align="right">Int</TableCell>
+          <TableCell className="table__cell" component="div" align="right">Int</TableCell>
         </TableRow>
       </TableHead>
-      <TableBody component="div">
-        <List
-          height={440}
-          itemCount={50}
-          itemSize={35}
-          width={500}
-        >
-          {UserRow}
-        </List>
+      <TableBody className="table__body" component="div">
+        <AutoSizer>
+          {({ height, width }) => (
+            <List
+              height={height}
+              width={width}
+              itemCount={50}
+              itemSize={47}
+            >
+              {UserRow}
+            </List>
+          )}
+        </AutoSizer>
       </TableBody>
     </Table>
   </TableContainer>

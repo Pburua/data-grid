@@ -1,3 +1,21 @@
 .table-container {
  height: 500px;
+ overflow-x: scroll;
+}
+
+.table {
+ height: 99%;
+
+ &__row {
+  display: flex !important;
+ }
+
+ &__cell {
+  flex: 1 !important;
+  text-align: center !important;
+
+  &.name {
+   min-width: 170px;
+  }
+ }
 }

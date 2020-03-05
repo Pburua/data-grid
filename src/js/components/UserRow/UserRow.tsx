@@ -7,12 +7,12 @@ const UserRow = ({ index, style }: any) => {
   faker.seed(index + 1);
 
   return (
-    <TableRow component="div" style={style}>
-      <TableCell component="div">{faker.name.findName()}</TableCell>
-      <TableCell component="div">{faker.random.number()}</TableCell>
-      <TableCell component="div">{faker.random.number()}</TableCell>
-      <TableCell component="div">{faker.random.number()}</TableCell>
-      <TableCell component="div">{faker.random.number()}</TableCell>
+    <TableRow className="table__row" component="div" style={style}>
+      <TableCell className="table__cell name" component="div">{faker.name.findName()}</TableCell>
+      <TableCell className="table__cell" component="div">{faker.random.number()}</TableCell>
+      <TableCell className="table__cell" component="div">{faker.random.number()}</TableCell>
+      <TableCell className="table__cell" component="div">{faker.random.number()}</TableCell>
+      <TableCell className="table__cell" component="div">{faker.random.number()}</TableCell>
     </TableRow>
   );
 };

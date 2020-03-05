@@ -7,10 +7,10 @@ const App = (props: any) => {
   const { counter } = props;
 
   return (
-    <div>
+    <>
       <h1 onClick={increment}>{counter}</h1>
       <UserTable />
-    </div>
+    </>
   );
 };
 
