@@ -31,4 +31,15 @@ class User {
   }
 }
 
-export default User;
+class FilterCriteria {
+  searchText: string;
+
+  isActive: string;
+
+  constructor(searchText, isActive) {
+    this.searchText = searchText;
+    this.isActive = isActive;
+  }
+}
+
+export { User, FilterCriteria };

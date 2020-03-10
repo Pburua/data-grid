@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { increment } from '../../actions/actions';
 import UserTable from '../UserTable/UserTable';
 import VirtualizationSwitcher from '../VirtualizationSwitcher/VirtualizationSwitcher';
+import FilterControls from '../FilterControls/FilterControls';
 
 const App = (props: any) => {
   const { counter } = props;
@@ -10,6 +11,7 @@ const App = (props: any) => {
   return (
     <>
       <h1 onClick={increment}>{counter}</h1>
+      <FilterControls />
       <UserTable />
       <VirtualizationSwitcher />
     </>
