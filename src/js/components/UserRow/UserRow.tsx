@@ -2,6 +2,7 @@ import React from 'react';
 import faker from 'faker';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import store from '../../store/store';
 
 const HeadRow = (
   <TableRow className="table__row head" key={0} component="div">
@@ -19,39 +20,6 @@ const HeadRow = (
   </TableRow>
 );
 
-class User {
-  name: string;
-
-  city: string;
-
-  score: number;
-
-  isActive: boolean;
-
-  constructor(name, city, score, isActive) {
-    this.name = name;
-    this.city = city;
-    this.score = score;
-    this.isActive = isActive;
-  }
-
-  getName() {
-    return this.name;
-  }
-
-  getCity() {
-    return this.city;
-  }
-
-  getScore() {
-    return this.score.toLocaleString();
-  }
-
-  getIsActive() {
-    return this.isActive ? 'yes' : 'no';
-  }
-}
-
 const UserRow = ({ index, style }: any) => {
   if (index === 0) {
     return (
@@ -61,12 +29,7 @@ const UserRow = ({ index, style }: any) => {
 
   faker.seed(index + 1);
 
-  const user = new User(
-    faker.name.findName(),
-    faker.address.city(),
-    faker.random.number(),
-    faker.random.boolean(),
-  );
+  const user = store.getState().data[index - 1];
 
   return (
     <TableRow className="table__row" key={index} component="div" style={style}>
