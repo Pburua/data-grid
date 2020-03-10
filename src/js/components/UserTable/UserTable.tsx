@@ -13,6 +13,8 @@ import UserRow from '../UserRow/UserRow';
 function UnVirtualizedList(Row, itemCount) {
   const rows: JSX.Element [] = [];
 
+  // TODO: change key to faker.name.findName()
+
   for (let i = 0; i < itemCount; i += 1) {
     rows.push(<Row key={i} index={i} />);
   }

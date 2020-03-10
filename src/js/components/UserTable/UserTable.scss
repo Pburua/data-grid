@@ -7,27 +7,44 @@
 
  &__row {
   display: flex !important;
+
+  &.head {
+   position: sticky !important;
+   top: 0;
+   background: white;
+   position: -webkit-sticky !important;
+   z-index: 2;
+  }
  }
 
  &__cell {
   flex: 1 !important;
-  text-align: center !important;
+  text-align: center;
+  border-right: 1px solid rgba(224, 224, 224, 1);
 
   &.name {
-   min-width: 170px;
+   min-width: 150px;
+   text-align: left;
+   overflow: hidden;
+   white-space: nowrap;
+   text-overflow: ellipsis;
   }
 
   &.int {
-   min-width: 100px;
+   min-width: 80px;
+   text-align: right;
+  }
+
+  &.bool {
+   min-width: 60px;
+   text-align: center;
+  }
+
+  &.head {
+   text-align: center;
   }
  }
 
  &__body {
- }
-
- &__head {
-  .table__row {
-   margin-right: 18px;
-  }
  }
 }
