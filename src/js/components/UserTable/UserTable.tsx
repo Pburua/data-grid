@@ -27,7 +27,7 @@ function UnVirtualizedList(Row, itemCount) {
 }
 
 const UserTable = (props: any) => {
-  const { isVirtualizeOn } = props;
+  const { isVirtualizeOn, filtratedDataLength } = props;
 
   return (
     <TableContainer className="table-container" component={Paper}>
@@ -42,7 +42,7 @@ const UserTable = (props: any) => {
                   <VirtualizedList
                     height={height}
                     width={width}
-                    itemCount={50}
+                    itemCount={filtratedDataLength}
                     itemSize={53}
                   >
                     {UserRow}
@@ -50,7 +50,7 @@ const UserTable = (props: any) => {
                 )}
               </AutoSizer>
             )
-            : UnVirtualizedList(UserRow, 50)}
+            : UnVirtualizedList(UserRow, filtratedDataLength)}
         </TableBody>
 
       </Table>
@@ -60,6 +60,7 @@ const UserTable = (props: any) => {
 
 const mapStateToProps = (state: any) => ({
   isVirtualizeOn: state.isVirtualizeOn,
+  filtratedDataLength: state.filtratedData.length,
 });
 
 export default connect(mapStateToProps)(UserTable);

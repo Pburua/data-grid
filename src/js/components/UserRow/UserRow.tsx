@@ -31,7 +31,7 @@ const UserRow = ({ index, style }: any) => {
 
   faker.seed(index + 1);
 
-  const user : User = store.getState().data[index - 1];
+  const user : User = store.getState().filtratedData[index - 1];
 
   return (
     <TableRow className="table__row" key={index} component="div" style={style}>
@@ -49,6 +49,5 @@ const UserRow = ({ index, style }: any) => {
     </TableRow>
   );
 };
-
 
 export default UserRow;
