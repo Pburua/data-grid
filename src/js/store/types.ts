@@ -11,10 +11,10 @@ class User {
   framework: string;
 
   constructor(name: string, city: string, score: number, isActive: boolean, framework: 0 | 1 | 2) {
-    this.name = name;
-    this.city = city;
+    this.name = name.toLowerCase();
+    this.city = city.toLowerCase();
     this.score = score.toLocaleString();
-    this.isActive = isActive ? 'active' : 'inactive';
+    this.isActive = isActive ? 'yes' : 'no';
     switch (framework) {
       case 0: {
         this.framework = 'react';

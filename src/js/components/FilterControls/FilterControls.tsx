@@ -12,11 +12,11 @@ const isActiveValues = [
     label: 'all',
   },
   {
-    value: 'active',
+    value: 'yes',
     label: 'active',
   },
   {
-    value: 'inactive',
+    value: 'no',
     label: 'inactive',
   },
 ];
@@ -54,7 +54,8 @@ const FilterControls = (props: any) => {
   }
 
   function handleSearchTextBlur() {
-    if (searchText !== filterCriteria.searchText) update({ searchText });
+    // eslint-disable-next-line max-len
+    if (searchText.toLowerCase() !== filterCriteria.searchText) update({ searchText: searchText.toLowerCase() });
   }
 
   function handleSearchTextChange(event) {

@@ -28,6 +28,7 @@
    overflow: hidden;
    white-space: nowrap;
    text-overflow: ellipsis;
+   text-transform: capitalize;
   }
 
   &.int {
@@ -37,6 +38,11 @@
 
   &.bool {
    min-width: 60px;
+   text-align: center;
+  }
+
+  &.enum {
+   min-width: 80px;
    text-align: center;
   }
 
