@@ -44,8 +44,6 @@ const FilterControls = (props: any) => {
   const { filterCriteria } = props;
   const [searchText, setSearchText] = useState('');
 
-  console.log(filterCriteria);
-
   function update(changedFilter) {
     updateFilters({
       searchText: filterCriteria.searchText,
@@ -56,7 +54,7 @@ const FilterControls = (props: any) => {
   }
 
   function handleSearchTextBlur() {
-    update({ searchText });
+    if (searchText !== filterCriteria.searchText) update({ searchText });
   }
 
   function handleSearchTextChange(event) {
@@ -64,11 +62,11 @@ const FilterControls = (props: any) => {
   }
 
   function handleIsActiveChange(_event, value) {
-    update({ isActive: value });
+    if (value && value !== filterCriteria.isActive) update({ isActive: value });
   }
 
   function handleFrameworkChange(event) {
-    update({ framework: event.target.value });
+    if (event.target.value !== filterCriteria.framework) update({ framework: event.target.value });
   }
 
   return (

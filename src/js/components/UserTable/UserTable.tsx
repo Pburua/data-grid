@@ -42,7 +42,7 @@ const UserTable = (props: any) => {
                   <VirtualizedList
                     height={height}
                     width={width}
-                    itemCount={51}
+                    itemCount={50}
                     itemSize={53}
                   >
                     {UserRow}
@@ -50,7 +50,7 @@ const UserTable = (props: any) => {
                 )}
               </AutoSizer>
             )
-            : UnVirtualizedList(UserRow, 51)}
+            : UnVirtualizedList(UserRow, 50)}
         </TableBody>
 
       </Table>
