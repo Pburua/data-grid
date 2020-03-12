@@ -4,6 +4,7 @@ import { Container, MenuItem, TextField } from '@material-ui/core';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import './FilterControls.scss';
+import { updateFilters } from '../../actions/actions';
 
 const isActiveValues = [
   {
@@ -41,14 +42,21 @@ const frameworkValues = [
 
 const FilterControls = (props: any) => {
   const { filterCriteria } = props;
-  const [searchText, setSearchText]: any = useState('');
-  const [isActive, setIsActive]: any = useState('all');
-  const [framework, setFramework]: any = useState('all');
+  const [searchText, setSearchText] = useState('');
 
   console.log(filterCriteria);
 
-  function log(text) {
-    console.log(text);
+  function update(changedFilter) {
+    updateFilters({
+      searchText: filterCriteria.searchText,
+      isActive: filterCriteria.isActive,
+      framework: filterCriteria.framework,
+      ...changedFilter,
+    });
+  }
+
+  function handleSearchTextBlur() {
+    update({ searchText });
   }
 
   function handleSearchTextChange(event) {
@@ -56,13 +64,11 @@ const FilterControls = (props: any) => {
   }
 
   function handleIsActiveChange(_event, value) {
-    setIsActive(value);
-    log(value);
+    update({ isActive: value });
   }
 
   function handleFrameworkChange(event) {
-    setFramework(event.target.value);
-    log(event.target.value);
+    update({ framework: event.target.value });
   }
 
   return (
@@ -73,15 +79,13 @@ const FilterControls = (props: any) => {
         id="search-text"
         label="Filter text"
         value={searchText}
-        onBlur={() => {
-          log(searchText);
-        }}
         onChange={handleSearchTextChange}
+        onBlur={handleSearchTextBlur}
       />
 
       <ToggleButtonGroup
         className="filter-controls__item"
-        value={isActive}
+        value={filterCriteria.isActive}
         exclusive
         onChange={handleIsActiveChange}
         aria-label="text alignment"
@@ -90,7 +94,7 @@ const FilterControls = (props: any) => {
           <ToggleButton
             key={option.value}
             value={option.value}
-            selected={option.value === isActive}
+            selected={option.value === filterCriteria.isActive}
           >
             {option.label}
           </ToggleButton>
@@ -102,7 +106,7 @@ const FilterControls = (props: any) => {
         id="framework"
         select
         label="Framework"
-        value={framework}
+        value={filterCriteria.framework}
         onChange={handleFrameworkChange}
       >
         {frameworkValues.map((option) => (
