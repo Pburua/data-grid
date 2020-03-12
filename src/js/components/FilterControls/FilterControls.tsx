@@ -3,25 +3,44 @@ import { connect } from 'react-redux';
 import { Container, MenuItem, TextField } from '@material-ui/core';
 import './FilterControls.scss';
 
-const isActiveValues = [
+// const isActiveValues = [
+//   {
+//     value: 'all',
+//     label: 'all',
+//   },
+//   {
+//     value: 'active',
+//     label: 'yes',
+//   },
+//   {
+//     value: 'inactive',
+//     label: 'no',
+//   },
+// ];
+
+const frameworkValues = [
   {
-    value: 'undefined',
+    value: 'all',
+    label: 'all',
+  },
+  {
+    value: 'react',
+    label: 'react',
+  },
+  {
+    value: 'angular',
+    label: 'angular',
+  },
+  {
+    value: 'both',
     label: 'both',
-  },
-  {
-    value: 'active',
-    label: 'yes',
-  },
-  {
-    value: 'inactive',
-    label: 'no',
   },
 ];
 
 const FilterControls = (props: any) => {
   const { filterCriteria } = props;
   const [searchText, setSearchText]: any = useState('');
-  const [isActive, setIsActive]: any = useState('undefined');
+  const [framework, setFramework]: any = useState('all');
 
   console.log(filterCriteria);
 
@@ -33,13 +52,14 @@ const FilterControls = (props: any) => {
     setSearchText(event.target.value);
   }
 
-  function handleIsActiveChange(event) {
-    setIsActive(event.target.value);
-    log(isActive);
+  function handleFrameworkChange(event) {
+    setFramework(event.target.value);
+    log(event.target.value);
   }
 
   return (
     <Container className="filter-controls">
+
       <TextField
         className="filter-controls__item"
         id="search-text"
@@ -50,20 +70,22 @@ const FilterControls = (props: any) => {
         }}
         onChange={handleSearchTextChange}
       />
+
       <TextField
         className="filter-controls__item"
-        id="is-active"
+        id="framework"
         select
-        label="Active"
-        value={isActive}
-        onChange={handleIsActiveChange}
+        label="Framework"
+        value={framework}
+        onChange={handleFrameworkChange}
       >
-        {isActiveValues.map((option) => (
+        {frameworkValues.map((option) => (
           <MenuItem key={option.value} value={option.value}>
             {option.label}
           </MenuItem>
         ))}
       </TextField>
+
     </Container>
   );
 };

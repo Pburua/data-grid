@@ -10,8 +10,9 @@ const filledArr = emptyArr.map((_value, index) => {
   return new User(
     faker.name.findName(),
     faker.address.city(),
-    faker.random.number(),
+    faker.random.number({ min: 0, max: 1500 }),
     faker.random.boolean(),
+    faker.random.number({ min: 0, max: 2 }),
   );
 });
 
@@ -20,10 +21,10 @@ const initialState = {
   isVirtualizeOn: true,
   data: filledArr,
   filtratedData: filledArr,
-  filterCriteria: new FilterCriteria('', 'inactive'),
+  filterCriteria: new FilterCriteria('', 'all', 'all'),
 };
 
-function rootReducer(prevState : any, action: any) {
+function rootReducer(prevState: any, action: any) {
   if (typeof prevState === 'undefined') {
     return initialState;
   }

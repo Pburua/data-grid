@@ -1,3 +1,4 @@
+// eslint-disable-next-line max-classes-per-file
 class User {
   name: string;
 
@@ -7,11 +8,14 @@ class User {
 
   isActive: boolean;
 
-  constructor(name, city, score, isActive) {
+  framework: number;
+
+  constructor(name, city, score, isActive, framework) {
     this.name = name;
     this.city = city;
     this.score = score;
     this.isActive = isActive;
+    this.framework = framework;
   }
 
   getName() {
@@ -29,6 +33,24 @@ class User {
   getIsActive() {
     return this.isActive ? 'yes' : 'no';
   }
+
+  getFramework() {
+    let framework;
+    switch (this.framework) {
+      case 0: {
+        framework = 'react';
+        break;
+      }
+      case 1: {
+        framework = 'angular';
+        break;
+      }
+      default: {
+        framework = 'both';
+      }
+    }
+    return framework;
+  }
 }
 
 class FilterCriteria {
@@ -36,9 +58,12 @@ class FilterCriteria {
 
   isActive: string;
 
-  constructor(searchText, isActive) {
+  framework: string;
+
+  constructor(searchText, isActive, framework) {
     this.searchText = searchText;
     this.isActive = isActive;
+    this.framework = framework;
   }
 }
 
