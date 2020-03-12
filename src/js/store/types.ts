@@ -4,52 +4,30 @@ class User {
 
   city: string;
 
-  score: number;
+  score: string;
 
-  isActive: boolean;
+  isActive: string;
 
-  framework: number;
+  framework: string;
 
-  constructor(name, city, score, isActive, framework) {
+  constructor(name: string, city: string, score: number, isActive: boolean, framework: 0 | 1 | 2) {
     this.name = name;
     this.city = city;
-    this.score = score;
-    this.isActive = isActive;
-    this.framework = framework;
-  }
-
-  getName() {
-    return this.name;
-  }
-
-  getCity() {
-    return this.city;
-  }
-
-  getScore() {
-    return this.score.toLocaleString();
-  }
-
-  getIsActive() {
-    return this.isActive ? 'yes' : 'no';
-  }
-
-  getFramework() {
-    let framework;
-    switch (this.framework) {
+    this.score = score.toLocaleString();
+    this.isActive = isActive ? 'active' : 'inactive';
+    switch (framework) {
       case 0: {
-        framework = 'react';
+        this.framework = 'react';
         break;
       }
       case 1: {
-        framework = 'angular';
+        this.framework = 'angular';
         break;
       }
       default: {
-        framework = 'both';
+        this.framework = 'both';
       }
     }
-    return framework;
   }
 }
 
