@@ -4,7 +4,7 @@ import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import './TableHeadItem.scss';
 import { connect } from 'react-redux';
-import { updateSortDirection } from '../../actions/actions';
+import { applyFirstPriority } from '../../actions/actions';
 
 const TableHeadItem = ({
   type, text, number, allSortParameters,
@@ -12,7 +12,8 @@ const TableHeadItem = ({
   const sortParams = allSortParameters[number];
 
   function handleTableHeadCellClick() {
-    updateSortDirection(!sortParams.isDirectionDown, number);
+    applyFirstPriority(number);
+    // updateSortDirection(!sortParams.isDirectionDown, number);
   }
 
   return (
@@ -27,7 +28,7 @@ const TableHeadItem = ({
             : <ArrowDropDownIcon fontSize="small" /> }
         </div>
         <div className="sort-controls__priority">
-          {sortParams.priority}
+          {sortParams.priority === 10 ? '' : sortParams.priority}
         </div>
       </div>
     </TableCell>

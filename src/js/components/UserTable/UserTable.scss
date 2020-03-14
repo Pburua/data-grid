@@ -7,6 +7,10 @@
 
  &__row {
   display: flex !important;
+
+  &:not(.table-head):hover {
+   background: #e5e5e5;
+  }
  }
 
  &__cell {

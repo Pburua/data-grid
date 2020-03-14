@@ -1,5 +1,6 @@
 import faker from 'faker';
 import {
+  APPLY_FIRST_PRIORITY,
   INCREMENT, TOGGLE_VIRTUALIZATION, UPDATE_FILTERS, UPDATE_SORT_DIRECTION,
 } from '../actions/actionTypes';
 import { User, FilterCriteria, SortParameters } from '../store/types';
@@ -25,6 +26,7 @@ function filtrate(data: User[], filterCriteria: FilterCriteria) {
 }
 
 function compareValues(a, b, isDirectionDown) {
+  // TODO: fix number sort bug
   if (isDirectionDown) return a.localeCompare(b);
   return b.localeCompare(a);
 }
@@ -76,17 +78,17 @@ const initialSortParams = [
   {
     sortCriteriaName: 'name',
     isDirectionDown: true,
-    priority: 4,
+    priority: 10,
   },
   {
     sortCriteriaName: 'city',
     isDirectionDown: true,
-    priority: 2,
+    priority: 10,
   },
   {
     sortCriteriaName: 'score',
     isDirectionDown: true,
-    priority: 3,
+    priority: 10,
   },
   {
     sortCriteriaName: 'isActive',
@@ -96,7 +98,7 @@ const initialSortParams = [
   {
     sortCriteriaName: 'framework',
     isDirectionDown: true,
-    priority: 5,
+    priority: 10,
   },
 ];
 
@@ -141,6 +143,20 @@ function rootReducer(prevState: any, action: any) {
     case UPDATE_SORT_DIRECTION: {
       const updatedArr: SortParameters = Array.from(prevState.sortParameters);
       updatedArr[action.cellNumber].isDirectionDown = action.newDirection;
+      return {
+        ...prevState,
+        sortParameters: updatedArr,
+        sortedAndFiltratedData: sortByCriteria(prevState.filtratedData, updatedArr),
+      };
+    }
+    case APPLY_FIRST_PRIORITY: {
+      const updatedArr: SortParameters = prevState.sortParameters.map((value, index) => ({
+        ...value,
+        isDirectionDown:
+          (index === action.cellNumber ? !value.isDirectionDown : value.isDirectionDown),
+        priority:
+          (index === action.cellNumber ? 1 : 10),
+      }));
       return {
         ...prevState,
         sortParameters: updatedArr,
