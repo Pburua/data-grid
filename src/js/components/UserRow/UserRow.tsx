@@ -10,17 +10,11 @@ import './UserRow.scss';
 
 const HeadRow = (
   <TableRow className="table__row table-head" key={0} component="div">
-    <TableHeadItem type="name" text="Name" />
-    <TableHeadItem type="name" text="City" />
-    <TableHeadItem type="int" text="Score" />
-    <TableHeadItem type="bool" text="Active" />
-    <TableHeadItem type="enum" text="Framework" />
-    <TableHeadItem type="int" text="Int" />
-    <TableHeadItem type="int" text="Int" />
-    <TableHeadItem type="int" text="Int" />
-    <TableHeadItem type="int" text="Int" />
-    <TableHeadItem type="int" text="Int" />
-    <TableHeadItem type="int" text="Int" />
+    <TableHeadItem number={0} type="name" text="Name" />
+    <TableHeadItem number={1} type="name" text="City" />
+    <TableHeadItem number={2} type="int" text="Score" />
+    <TableHeadItem number={3} type="bool" text="Active" />
+    <TableHeadItem number={4} type="enum" text="Framework" />
   </TableRow>
 );
 
@@ -42,12 +36,6 @@ const UserRow = ({ index, style }: any) => {
       <TableCell className="table__cell int" component="div">{user.score}</TableCell>
       <TableCell className="table__cell bool" component="div">{user.isActive}</TableCell>
       <TableCell className="table__cell enum" component="div">{user.framework}</TableCell>
-      <TableCell className="table__cell int" component="div">{faker.random.number()}</TableCell>
-      <TableCell className="table__cell int" component="div">{faker.random.number()}</TableCell>
-      <TableCell className="table__cell int" component="div">{faker.random.number()}</TableCell>
-      <TableCell className="table__cell int" component="div">{faker.random.number()}</TableCell>
-      <TableCell className="table__cell int" component="div">{faker.random.number()}</TableCell>
-      <TableCell className="table__cell int" component="div">{faker.random.number()}</TableCell>
     </TableRow>
   );
 };

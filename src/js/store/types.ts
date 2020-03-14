@@ -45,4 +45,11 @@ class FilterCriteria {
   }
 }
 
-export { User, FilterCriteria };
+interface SortParameters {
+  [index: number]: {
+    isDirectionDown: boolean;
+    priority: number;
+  };
+}
+
+export { User, FilterCriteria, SortParameters };

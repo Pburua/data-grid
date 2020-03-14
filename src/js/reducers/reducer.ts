@@ -1,6 +1,8 @@
 import faker from 'faker';
-import { INCREMENT, TOGGLE_VIRTUALIZATION, UPDATE_FILTERS } from '../actions/actionTypes';
-import { User, FilterCriteria } from '../store/types';
+import {
+  INCREMENT, TOGGLE_VIRTUALIZATION, UPDATE_FILTERS, UPDATE_SORT_DIRECTION,
+} from '../actions/actionTypes';
+import { User, FilterCriteria, SortParameters } from '../store/types';
 
 function filtrate(data: User[], filterCriteria: FilterCriteria) {
   return data.filter((value: User) => {
@@ -42,6 +44,28 @@ const initialState = {
   data: filledArr,
   filtratedData: filledArr,
   filterCriteria: new FilterCriteria('', 'all', 'all'),
+  sortParameters: [
+    {
+      isDirectionDown: true,
+      priority: 5,
+    },
+    {
+      isDirectionDown: true,
+      priority: 4,
+    },
+    {
+      isDirectionDown: true,
+      priority: 3,
+    },
+    {
+      isDirectionDown: true,
+      priority: 2,
+    },
+    {
+      isDirectionDown: true,
+      priority: 1,
+    },
+  ],
 };
 
 function rootReducer(prevState: any, action: any) {
@@ -66,6 +90,14 @@ function rootReducer(prevState: any, action: any) {
         filterCriteria: action.filterCriteria,
         filtratedData: filtrate(prevState.data, action.filterCriteria),
       };
+    case UPDATE_SORT_DIRECTION: {
+      const updatedArr: SortParameters = Array.from(prevState.sortParameters);
+      updatedArr[action.cellNumber].isDirectionDown = action.newDirection;
+      return {
+        ...prevState,
+        sortParameters: updatedArr,
+      };
+    }
     default:
       return prevState;
   }

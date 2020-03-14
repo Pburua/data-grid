@@ -1,4 +1,6 @@
-import { INCREMENT, TOGGLE_VIRTUALIZATION, UPDATE_FILTERS } from './actionTypes';
+import {
+  INCREMENT, TOGGLE_VIRTUALIZATION, UPDATE_FILTERS, UPDATE_SORT_DIRECTION,
+} from './actionTypes';
 import store from '../store/store';
 
 export function increment() {
@@ -19,6 +21,15 @@ export function updateFilters(newFilter) {
   const action = {
     type: UPDATE_FILTERS,
     filterCriteria: newFilter,
+  };
+  store.dispatch(action);
+}
+
+export function updateSortDirection(newDirection, cellNumber) {
+  const action = {
+    type: UPDATE_SORT_DIRECTION,
+    newDirection,
+    cellNumber,
   };
   store.dispatch(action);
 }
