@@ -4,6 +4,7 @@
  background: white;
  position: -webkit-sticky !important;
  z-index: 2;
+ user-select: none;
 
  &__cell {
   display: flex !important;

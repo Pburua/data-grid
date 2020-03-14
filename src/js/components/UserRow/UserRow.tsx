@@ -10,11 +10,11 @@ import './UserRow.scss';
 
 const HeadRow = (
   <TableRow className="table__row table-head" key={0} component="div">
-    <TableHeadItem number={0} type="name" text="Name" />
-    <TableHeadItem number={1} type="name" text="City" />
-    <TableHeadItem number={2} type="int" text="Score" />
-    <TableHeadItem number={3} type="bool" text="Active" />
-    <TableHeadItem number={4} type="enum" text="Framework" />
+    <TableHeadItem columnIndex={0} type="name" text="Name" />
+    <TableHeadItem columnIndex={1} type="name" text="City" />
+    <TableHeadItem columnIndex={2} type="int" text="Score" />
+    <TableHeadItem columnIndex={3} type="bool" text="Active" />
+    <TableHeadItem columnIndex={4} type="enum" text="Framework" />
   </TableRow>
 );
 

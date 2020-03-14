@@ -1,5 +1,10 @@
 import {
-  INCREMENT, TOGGLE_VIRTUALIZATION, UPDATE_FILTERS, UPDATE_SORT_DIRECTION, APPLY_FIRST_PRIORITY,
+  INCREMENT,
+  TOGGLE_VIRTUALIZATION,
+  UPDATE_FILTERS,
+  UPDATE_SORT_DIRECTION,
+  APPLY_FIRST_PRIORITY,
+  APPLY_ADDITIONAL_PRIORITY,
 } from './actionTypes';
 import store from '../store/store';
 
@@ -37,6 +42,14 @@ export function updateSortDirection(newDirection, cellNumber) {
 export function applyFirstPriority(cellNumber) {
   const action = {
     type: APPLY_FIRST_PRIORITY,
+    cellNumber,
+  };
+  store.dispatch(action);
+}
+
+export function applyAdditionalPriority(cellNumber) {
+  const action = {
+    type: APPLY_ADDITIONAL_PRIORITY,
     cellNumber,
   };
   store.dispatch(action);

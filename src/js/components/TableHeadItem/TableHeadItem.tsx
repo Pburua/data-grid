@@ -4,16 +4,19 @@ import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import './TableHeadItem.scss';
 import { connect } from 'react-redux';
-import { applyFirstPriority } from '../../actions/actions';
+import { applyAdditionalPriority, applyFirstPriority } from '../../actions/actions';
 
 const TableHeadItem = ({
-  type, text, number, allSortParameters,
+  type, text, columnIndex, allSortParameters,
 }: any) => {
-  const sortParams = allSortParameters[number];
+  const sortParams = allSortParameters[columnIndex];
 
-  function handleTableHeadCellClick() {
-    applyFirstPriority(number);
-    // updateSortDirection(!sortParams.isDirectionDown, number);
+  function handleTableHeadCellClick(event) {
+    if (event.shiftKey) {
+      applyAdditionalPriority(columnIndex);
+    } else {
+      applyFirstPriority(columnIndex);
+    }
   }
 
   return (

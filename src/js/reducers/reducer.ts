@@ -1,5 +1,6 @@
 import faker from 'faker';
 import {
+  APPLY_ADDITIONAL_PRIORITY,
   APPLY_FIRST_PRIORITY,
   INCREMENT, TOGGLE_VIRTUALIZATION, UPDATE_FILTERS, UPDATE_SORT_DIRECTION,
 } from '../actions/actionTypes';
@@ -44,7 +45,7 @@ function compareValues(a, b, isDirectionDown) {
 }
 
 function sortByCriteria(data: User[], sortParameters: SortParameters) {
-  const sortCriteriaArr : SortParameters = [...sortParameters];
+  const sortCriteriaArr: SortParameters = [...sortParameters];
   sortCriteriaArr.sort((a, b) => {
     if (a.priority > b.priority) {
       return 1;
@@ -126,6 +127,29 @@ const initialState = {
   sortedAndFiltratedData: sortByCriteria([...filledArr], initialSortParams),
 };
 
+function handleApplyAdditionalPriority(prevState, action) {
+  let maxPriority = 0;
+
+  for (let i = 0; i < prevState.sortParameters.length; i += 1) {
+    const currPriority = prevState.sortParameters[i].priority;
+    if (currPriority > maxPriority && currPriority !== 10) maxPriority = currPriority;
+  }
+
+  const updatedArr: SortParameters = prevState.sortParameters.map((value, index) => ({
+    ...value,
+    isDirectionDown:
+      (index === action.cellNumber ? !value.isDirectionDown : value.isDirectionDown),
+    priority:
+      (index === action.cellNumber && value.priority === 10 ? maxPriority + 1 : value.priority),
+  }));
+
+  return {
+    ...prevState,
+    sortParameters: updatedArr,
+    sortedAndFiltratedData: sortByCriteria(prevState.filtratedData, updatedArr),
+  };
+}
+
 function rootReducer(prevState: any, action: any) {
   if (typeof prevState === 'undefined') {
     return initialState;
@@ -174,6 +198,9 @@ function rootReducer(prevState: any, action: any) {
         sortParameters: updatedArr,
         sortedAndFiltratedData: sortByCriteria(prevState.filtratedData, updatedArr),
       };
+    }
+    case APPLY_ADDITIONAL_PRIORITY: {
+      return handleApplyAdditionalPriority(prevState, action);
     }
     default:
       return prevState;
