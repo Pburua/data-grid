@@ -42,7 +42,7 @@ const UserTable = (props: any) => {
                   <VirtualizedList
                     height={height}
                     width={width}
-                    itemCount={filtratedDataLength}
+                    itemCount={filtratedDataLength + 1}
                     itemSize={53}
                   >
                     {UserRow}
@@ -50,7 +50,7 @@ const UserTable = (props: any) => {
                 )}
               </AutoSizer>
             )
-            : UnVirtualizedList(UserRow, filtratedDataLength)}
+            : UnVirtualizedList(UserRow, filtratedDataLength + 1)}
         </TableBody>
 
       </Table>

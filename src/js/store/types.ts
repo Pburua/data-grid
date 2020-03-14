@@ -47,9 +47,13 @@ class FilterCriteria {
 
 interface SortParameters {
   [index: number]: {
+    sortCriteriaName: string;
     isDirectionDown: boolean;
     priority: number;
   };
+  sort: any;
+  length: number;
+  [Symbol.iterator]();
 }
 
 export { User, FilterCriteria, SortParameters };
