@@ -1,0 +1,25 @@
+.table-head {
+ position: sticky !important;
+ top: 0;
+ background: white;
+ position: -webkit-sticky !important;
+ z-index: 2;
+
+ &__cell {
+  display: flex !important;
+ }
+
+ &__text {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 10px;
+ }
+
+ &__sort-controls {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+ }
+}

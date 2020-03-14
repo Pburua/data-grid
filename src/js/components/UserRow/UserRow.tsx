@@ -5,20 +5,22 @@ import TableRow from '@material-ui/core/TableRow';
 import store from '../../store/store';
 // eslint-disable-next-line no-unused-vars
 import { User } from '../../store/types';
+import TableHeadItem from '../TableHeadItem/TableHeadItem';
+import './UserRow.scss';
 
 const HeadRow = (
-  <TableRow className="table__row head" key={0} component="div">
-    <TableCell className="table__cell head name" component="div">Name</TableCell>
-    <TableCell className="table__cell head name" component="div">City</TableCell>
-    <TableCell className="table__cell head int" component="div">Score</TableCell>
-    <TableCell className="table__cell head bool" component="div">Active</TableCell>
-    <TableCell className="table__cell head enum" component="div">Framework</TableCell>
-    <TableCell className="table__cell head int" component="div">Int</TableCell>
-    <TableCell className="table__cell head int" component="div">Int</TableCell>
-    <TableCell className="table__cell head int" component="div">Int</TableCell>
-    <TableCell className="table__cell head int" component="div">Int</TableCell>
-    <TableCell className="table__cell head int" component="div">Int</TableCell>
-    <TableCell className="table__cell head int" component="div">Int</TableCell>
+  <TableRow className="table__row table-head" key={0} component="div">
+    <TableHeadItem type="name" text="Name" />
+    <TableHeadItem type="name" text="City" />
+    <TableHeadItem type="int" text="Score" />
+    <TableHeadItem type="bool" text="Active" />
+    <TableHeadItem type="enum" text="Framework" />
+    <TableHeadItem type="int" text="Int" />
+    <TableHeadItem type="int" text="Int" />
+    <TableHeadItem type="int" text="Int" />
+    <TableHeadItem type="int" text="Int" />
+    <TableHeadItem type="int" text="Int" />
+    <TableHeadItem type="int" text="Int" />
   </TableRow>
 );
 
