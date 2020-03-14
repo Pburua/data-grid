@@ -27,7 +27,7 @@ const UserRow = ({ index, style }: any) => {
 
   faker.seed(index + 1);
 
-  const user : User = store.getState().filtratedData[index - 1];
+  const user : User = store.getState().sortedAndFiltratedData[index - 1];
 
   return (
     <TableRow className="table__row" key={index} component="div" style={style}>

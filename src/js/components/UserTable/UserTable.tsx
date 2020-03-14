@@ -26,31 +26,35 @@ function UnVirtualizedList(Row, itemCount) {
   );
 }
 
+function VirtualizedListWrapper(length) {
+  return (
+    <AutoSizer>
+      {({ height, width }) => (
+        <VirtualizedList
+          height={height}
+          width={width}
+          itemCount={length}
+          itemSize={53}
+          autoRefresh={{}}
+        >
+          {UserRow}
+        </VirtualizedList>
+      )}
+    </AutoSizer>
+  );
+}
+
 const UserTable = (props: any) => {
-  const { isVirtualizeOn, filtratedDataLength } = props;
+  const { isVirtualizeOn, sortedAndFiltratedData } = props;
 
   return (
     <TableContainer className="table-container" component={Paper}>
       <Table className="table" aria-label="simple table" component="div">
 
         <TableBody className="table__body" component="div">
-
           {isVirtualizeOn
-            ? (
-              <AutoSizer>
-                {({ height, width }) => (
-                  <VirtualizedList
-                    height={height}
-                    width={width}
-                    itemCount={filtratedDataLength + 1}
-                    itemSize={53}
-                  >
-                    {UserRow}
-                  </VirtualizedList>
-                )}
-              </AutoSizer>
-            )
-            : UnVirtualizedList(UserRow, filtratedDataLength + 1)}
+            ? VirtualizedListWrapper(sortedAndFiltratedData.length + 1)
+            : UnVirtualizedList(UserRow, sortedAndFiltratedData.length + 1)}
         </TableBody>
 
       </Table>
@@ -60,7 +64,7 @@ const UserTable = (props: any) => {
 
 const mapStateToProps = (state: any) => ({
   isVirtualizeOn: state.isVirtualizeOn,
-  filtratedDataLength: state.filtratedData.length,
+  sortedAndFiltratedData: state.sortedAndFiltratedData,
 });
 
 export default connect(mapStateToProps)(UserTable);

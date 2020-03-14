@@ -41,13 +41,9 @@ function sortByCriteria(data: User[], sortParameters: SortParameters) {
     return 0;
   });
 
-  console.log(data);
-
-  console.log(sortCriteriaArr);
-
   const dataCopy = [...data];
 
-  const sortedData = dataCopy.sort((a, b) => {
+  return dataCopy.sort((a, b) => {
     for (let i = 0; i < sortCriteriaArr.length; i += 1) {
       const compareResult = compareValues(
         a[sortCriteriaArr[i].sortCriteriaName],
@@ -60,10 +56,6 @@ function sortByCriteria(data: User[], sortParameters: SortParameters) {
     }
     return 0;
   });
-
-  console.log(sortedData);
-
-  return sortedData;
 }
 
 const emptyArr = new Array(10).fill(undefined);
