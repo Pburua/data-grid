@@ -25,8 +25,20 @@ function filtrate(data: User[], filterCriteria: FilterCriteria) {
   });
 }
 
+function compareNumbers(a, b) {
+  if (a > b) return 1;
+  if (a < b) return -1;
+  return 0;
+}
+
 function compareValues(a, b, isDirectionDown) {
-  // TODO: fix number sort bug
+  const aNum = parseInt(a.replace(/\s/g, ''), 10);
+
+  if (aNum) {
+    const bNum = parseInt(b.replace(/\s/g, ''), 10);
+    if (isDirectionDown) return compareNumbers(aNum, bNum);
+    return compareNumbers(bNum, aNum);
+  }
   if (isDirectionDown) return a.localeCompare(b);
   return b.localeCompare(a);
 }
