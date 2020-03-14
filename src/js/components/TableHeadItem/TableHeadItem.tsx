@@ -20,8 +20,15 @@ const TableHeadItem = ({
       <div className="table-head__text">
         {text}
       </div>
-      <div className="table-head__sort-controls">
-        {!sortParams.isDirectionDown ? <ArrowDropUpIcon fontSize="small" /> : <ArrowDropDownIcon fontSize="small" />}
+      <div className="table-head__sort-controls sort-controls">
+        <div className="sort-controls__icon">
+          {!sortParams.isDirectionDown
+            ? <ArrowDropUpIcon fontSize="small" />
+            : <ArrowDropDownIcon fontSize="small" /> }
+        </div>
+        <div className="sort-controls__priority">
+          {sortParams.priority}
+        </div>
       </div>
     </TableCell>
   );
