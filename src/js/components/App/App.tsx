@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { increment } from '../../actions/actions';
 import UserTable from '../UserTable/UserTable';
-import VirtualizationSwitcher from '../VirtualizationSwitcher/VirtualizationSwitcher';
+import VirtualizationSwitcher from '../BottomPanel/BottomPanel';
 import FilterControls from '../FilterControls/FilterControls';
 
 const App = (props: any) => {

@@ -91,7 +91,7 @@ const initialSortParams = [
   {
     sortCriteriaName: 'name',
     isDirectionDown: true,
-    priority: 10,
+    priority: 1,
   },
   {
     sortCriteriaName: 'city',
@@ -105,8 +105,8 @@ const initialSortParams = [
   },
   {
     sortCriteriaName: 'isActive',
-    isDirectionDown: false,
-    priority: 1,
+    isDirectionDown: true,
+    priority: 10,
   },
   {
     sortCriteriaName: 'framework',
