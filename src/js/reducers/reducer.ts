@@ -24,8 +24,9 @@ function filtrate(data: User[], filterCriteria: FilterCriteria) {
   });
 }
 
-function compareValues(a, b) {
-  return a.localeCompare(b);
+function compareValues(a, b, isDirectionDown) {
+  if (isDirectionDown) return a.localeCompare(b);
+  return b.localeCompare(a);
 }
 
 function sortByCriteria(data: User[], sortParameters: SortParameters) {
@@ -51,6 +52,7 @@ function sortByCriteria(data: User[], sortParameters: SortParameters) {
       const compareResult = compareValues(
         a[sortCriteriaArr[i].sortCriteriaName],
         b[sortCriteriaArr[i].sortCriteriaName],
+        sortCriteriaArr[i].isDirectionDown,
       );
       if (compareResult !== 0) {
         return compareResult;
@@ -82,7 +84,7 @@ const initialSortParams = [
   {
     sortCriteriaName: 'name',
     isDirectionDown: true,
-    priority: 1,
+    priority: 4,
   },
   {
     sortCriteriaName: 'city',
@@ -96,8 +98,8 @@ const initialSortParams = [
   },
   {
     sortCriteriaName: 'isActive',
-    isDirectionDown: true,
-    priority: 4,
+    isDirectionDown: false,
+    priority: 1,
   },
   {
     sortCriteriaName: 'framework',
