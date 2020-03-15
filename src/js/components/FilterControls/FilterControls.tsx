@@ -13,8 +13,8 @@ import {
 } from '@material-ui/core';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import './FilterControls.scss';
 import { updateFilters } from '../../actions/actions';
+import './FilterControls.scss';
 
 const isActiveValues = [
   {
@@ -90,69 +90,60 @@ const FilterControls = (props: any) => {
   return (
     <Container className="filter-controls">
 
-      <TextField
-        className="filter-controls__item"
-        id="search-text"
-        label="Filter text"
-        value={searchText}
-        onChange={handleSearchTextChange}
-        onBlur={handleSearchTextBlur}
-      />
+      <div className="filter-controls__item">
+        <TextField
+          id="search-text"
+          label="Filter text"
+          value={searchText}
+          onChange={handleSearchTextChange}
+          onBlur={handleSearchTextBlur}
+        />
+      </div>
 
-      <ToggleButtonGroup
-        className="filter-controls__item"
-        value={filterCriteria.isActive}
-        size="small"
-        exclusive
-        onChange={handleIsActiveChange}
-        aria-label="text alignment"
-      >
-        {isActiveValues.map((option) => (
-          <ToggleButton
-            key={option.value}
-            value={option.value}
-            selected={option.value === filterCriteria.isActive}
-          >
-            {option.label}
-          </ToggleButton>
-        ))}
-      </ToggleButtonGroup>
-
-      {/* <TextField */}
-      {/*  className="filter-controls__item" */}
-      {/*  id="framework" */}
-      {/*  select */}
-      {/*  label="Framework" */}
-      {/*  value={filterCriteria.framework} */}
-      {/*  onChange={handleFrameworkChange} */}
-      {/* > */}
-      {/*  {frameworkValues.map((option) => ( */}
-      {/*    <MenuItem key={option.value} value={option.value}> */}
-      {/*      {option.label} */}
-      {/*    </MenuItem> */}
-      {/*  ))} */}
-      {/* </TextField> */}
-
-      <FormControl>
-        <InputLabel id="demo-mutiple-checkbox-label">Framework</InputLabel>
-        <Select
-          labelId="demo-mutiple-checkbox-label"
-          id="demo-mutiple-checkbox"
-          multiple
-          value={filterCriteria.frameworks}
-          input={<Input />}
-          MenuProps={MenuProps}
-          renderValue={(selected: any) => selected.join(', ')}
-          onChange={handleFrameworksChange}
+      <div className="filter-controls__item">
+        <ToggleButtonGroup
+          className="filter-controls__item"
+          value={filterCriteria.isActive}
+          size="small"
+          exclusive
+          onChange={handleIsActiveChange}
+          aria-label="text alignment"
         >
-          {frameworkValues.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              <Checkbox checked={filterCriteria.frameworks.includes(option.value)} />
-              <ListItemText primary={option.label} />
-            </MenuItem>
+          {isActiveValues.map((option) => (
+            <ToggleButton
+              key={option.value}
+              value={option.value}
+              selected={option.value === filterCriteria.isActive}
+            >
+              {option.label}
+            </ToggleButton>
           ))}
-        </Select>
-      </FormControl>
+        </ToggleButtonGroup>
+      </div>
+
+      <div className="filter-controls__item">
+        <FormControl>
+          <InputLabel id="demo-multiple-checkbox-label">Framework</InputLabel>
+          <Select
+            labelId="demo-multiple-checkbox-label"
+            id="demo-multiple-checkbox"
+            className="filter-controls__multiple-checkbox"
+            multiple
+            value={filterCriteria.frameworks}
+            input={<Input />}
+            MenuProps={MenuProps}
+            renderValue={(selected: any) => selected.join(', ')}
+            onChange={handleFrameworksChange}
+          >
+            {frameworkValues.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                <Checkbox checked={filterCriteria.frameworks.includes(option.value)} />
+                <ListItemText primary={option.label} />
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
 
     </Container>
   );
