@@ -1,25 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { increment } from '../../actions/actions';
 import UserTable from '../UserTable/UserTable';
 import VirtualizationSwitcher from '../BottomPanel/BottomPanel';
 import FilterControls from '../FilterControls/FilterControls';
 
-const App = (props: any) => {
-  const { counter } = props;
+const App = () => (
+  <>
+    <FilterControls />
+    <UserTable />
+    <VirtualizationSwitcher />
+  </>
+);
 
-  return (
-    <>
-      <h1 onClick={increment}>{counter}</h1>
-      <FilterControls />
-      <UserTable />
-      <VirtualizationSwitcher />
-    </>
-  );
-};
-
-const mapStateToProps = (state: any) => ({
-  counter: state.counter,
-});
-
-export default connect(mapStateToProps)(App);
+export default App;
