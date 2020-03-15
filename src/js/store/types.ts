@@ -56,12 +56,12 @@ class FilterCriteria {
 
   isActive: string;
 
-  framework: string;
+  frameworks: string[];
 
-  constructor(searchText, isActive, framework) {
+  constructor(searchText, isActive, frameworks) {
     this.searchText = searchText;
     this.isActive = isActive;
-    this.framework = framework;
+    this.frameworks = frameworks;
   }
 }
 

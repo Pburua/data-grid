@@ -53,7 +53,7 @@ const initialSortParams = [
   },
 ];
 
-const initialFilterCriteria = new FilterCriteria('', 'all', 'all');
+const initialFilterCriteria = new FilterCriteria('', 'all', ['react', 'angular', 'both']);
 
 const initialState = {
   isVirtualizeOn: true,

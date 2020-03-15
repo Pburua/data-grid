@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { Container, MenuItem, TextField } from '@material-ui/core';
+import {
+  Checkbox,
+  Container,
+  FormControl,
+  Input,
+  InputLabel,
+  ListItemText,
+  MenuItem,
+  Select,
+  TextField,
+} from '@material-ui/core';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import './FilterControls.scss';
@@ -23,10 +33,6 @@ const isActiveValues = [
 
 const frameworkValues = [
   {
-    value: 'all',
-    label: 'all',
-  },
-  {
     value: 'react',
     label: 'react',
   },
@@ -40,6 +46,15 @@ const frameworkValues = [
   },
 ];
 
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: 48 * 4.5 + 8,
+      width: 250,
+    },
+  },
+};
+
 const FilterControls = (props: any) => {
   const { filterCriteria } = props;
   const [searchText, setSearchText] = useState('');
@@ -48,7 +63,7 @@ const FilterControls = (props: any) => {
     updateFilters({
       searchText: filterCriteria.searchText,
       isActive: filterCriteria.isActive,
-      framework: filterCriteria.framework,
+      frameworks: filterCriteria.frameworks,
       ...changedFilter,
     });
   }
@@ -66,8 +81,10 @@ const FilterControls = (props: any) => {
     if (value && value !== filterCriteria.isActive) update({ isActive: value });
   }
 
-  function handleFrameworkChange(event) {
-    if (event.target.value !== filterCriteria.framework) update({ framework: event.target.value });
+  function handleFrameworksChange(event) {
+    update({
+      frameworks: event.target.value,
+    });
   }
 
   return (
@@ -85,6 +102,7 @@ const FilterControls = (props: any) => {
       <ToggleButtonGroup
         className="filter-controls__item"
         value={filterCriteria.isActive}
+        size="small"
         exclusive
         onChange={handleIsActiveChange}
         aria-label="text alignment"
@@ -100,20 +118,41 @@ const FilterControls = (props: any) => {
         ))}
       </ToggleButtonGroup>
 
-      <TextField
-        className="filter-controls__item"
-        id="framework"
-        select
-        label="Framework"
-        value={filterCriteria.framework}
-        onChange={handleFrameworkChange}
-      >
-        {frameworkValues.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </TextField>
+      {/* <TextField */}
+      {/*  className="filter-controls__item" */}
+      {/*  id="framework" */}
+      {/*  select */}
+      {/*  label="Framework" */}
+      {/*  value={filterCriteria.framework} */}
+      {/*  onChange={handleFrameworkChange} */}
+      {/* > */}
+      {/*  {frameworkValues.map((option) => ( */}
+      {/*    <MenuItem key={option.value} value={option.value}> */}
+      {/*      {option.label} */}
+      {/*    </MenuItem> */}
+      {/*  ))} */}
+      {/* </TextField> */}
+
+      <FormControl>
+        <InputLabel id="demo-mutiple-checkbox-label">Framework</InputLabel>
+        <Select
+          labelId="demo-mutiple-checkbox-label"
+          id="demo-mutiple-checkbox"
+          multiple
+          value={filterCriteria.frameworks}
+          input={<Input />}
+          MenuProps={MenuProps}
+          renderValue={(selected: any) => selected.join(', ')}
+          onChange={handleFrameworksChange}
+        >
+          {frameworkValues.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              <Checkbox checked={filterCriteria.frameworks.includes(option.value)} />
+              <ListItemText primary={option.label} />
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
     </Container>
   );
