@@ -7,6 +7,7 @@ function filtrate(data: User[], filterCriteria: FilterCriteria) {
       && !value.name.includes(filterCriteria.searchText)
       && !value.city.includes(filterCriteria.searchText)
       && !value.score.includes(filterCriteria.searchText)
+      && !value.date.includes(filterCriteria.searchText)
     ) return false;
 
     if (filterCriteria.isActive !== 'all'
