@@ -5,9 +5,21 @@ class User {
 
   city: string;
 
-  score: string;
+  taskScore1: string;
 
-  unconvertedScore: number;
+  taskScore2: string;
+
+  taskScore3: string;
+
+  totalScore: string;
+
+  unconvertedTaskScore1: number;
+
+  unconvertedTaskScore2: number;
+
+  unconvertedTaskScore3: number;
+
+  unconvertedTotalScore: number;
 
   isActive: string;
 
@@ -19,7 +31,9 @@ class User {
 
   constructor(name: string,
     city: string,
-    score: number,
+    taskScore1: number,
+    taskScore2: number,
+    taskScore3: number,
     isActive: boolean,
     framework: 0 | 1 | 2,
     date: any) {
@@ -27,8 +41,18 @@ class User {
 
     this.city = city.toLowerCase();
 
-    this.unconvertedScore = score;
-    this.score = score.toLocaleString();
+    this.unconvertedTaskScore1 = taskScore1;
+    this.taskScore1 = taskScore1.toLocaleString();
+
+    this.unconvertedTaskScore2 = taskScore2;
+    this.taskScore2 = taskScore2.toLocaleString();
+
+    this.unconvertedTaskScore3 = taskScore3;
+    this.taskScore3 = taskScore3.toLocaleString();
+
+    const totalScore = taskScore1 + taskScore2 + taskScore3;
+    this.unconvertedTotalScore = totalScore;
+    this.totalScore = totalScore.toLocaleString();
 
     this.isActive = isActive ? 'yes' : 'no';
     switch (framework) {

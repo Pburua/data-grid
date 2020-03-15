@@ -13,7 +13,9 @@ const filledArr = emptyArr.map((_value, index) => {
   return new User(
     faker.name.findName(),
     faker.address.city(),
-    faker.random.number({ min: 0, max: 1500 }),
+    faker.random.number({ min: 0, max: 500 }),
+    faker.random.number({ min: 0, max: 500 }),
+    faker.random.number({ min: 0, max: 500 }),
     faker.random.boolean(),
     faker.random.number({ min: 0, max: 2 }),
     faker.date.recent(30),
@@ -32,7 +34,22 @@ const initialSortParams = [
     priority: 10,
   },
   {
-    sortCriteriaName: 'unconvertedScore',
+    sortCriteriaName: 'unconvertedTaskScore1',
+    isDirectionDown: true,
+    priority: 10,
+  },
+  {
+    sortCriteriaName: 'unconvertedTaskScore2',
+    isDirectionDown: true,
+    priority: 10,
+  },
+  {
+    sortCriteriaName: 'unconvertedTaskScore3',
+    isDirectionDown: true,
+    priority: 10,
+  },
+  {
+    sortCriteriaName: 'unconvertedTotalScore',
     isDirectionDown: true,
     priority: 10,
   },

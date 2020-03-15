@@ -6,7 +6,10 @@ function filtrate(data: User[], filterCriteria: FilterCriteria) {
     if (filterCriteria.searchText !== ''
       && !value.name.includes(filterCriteria.searchText)
       && !value.city.includes(filterCriteria.searchText)
-      && !value.score.includes(filterCriteria.searchText)
+      && !value.taskScore1.includes(filterCriteria.searchText)
+      && !value.taskScore2.includes(filterCriteria.searchText)
+      && !value.taskScore3.includes(filterCriteria.searchText)
+      && !value.totalScore.includes(filterCriteria.searchText)
       && !value.date.includes(filterCriteria.searchText)
     ) return false;
 
@@ -34,7 +37,10 @@ function compareDates(a: moment.Moment, b: moment.Moment) {
 }
 
 function compareValues(a, b, isDirectionDown, sortCriteriaName) {
-  if (sortCriteriaName === 'unconvertedScore') {
+  if (sortCriteriaName === 'unconvertedTaskScore1'
+    || sortCriteriaName === 'unconvertedTaskScore2'
+    || sortCriteriaName === 'unconvertedTaskScore3'
+    || sortCriteriaName === 'unconvertedTotalScore') {
     if (isDirectionDown) return compareNumbers(a, b);
     return compareNumbers(b, a);
   }
