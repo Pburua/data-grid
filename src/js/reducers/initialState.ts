@@ -5,7 +5,7 @@ import {
 } from './utils';
 import { FilterCriteria, User } from '../store/types';
 
-const emptyArr = new Array(10).fill(undefined);
+const emptyArr = new Array(100).fill(undefined);
 
 const filledArr = emptyArr.map((_value, index) => {
   faker.seed(index + 2);
@@ -16,6 +16,7 @@ const filledArr = emptyArr.map((_value, index) => {
     faker.random.number({ min: 0, max: 1500 }),
     faker.random.boolean(),
     faker.random.number({ min: 0, max: 2 }),
+    faker.date.recent(30),
   );
 });
 
@@ -42,6 +43,11 @@ const initialSortParams = [
   },
   {
     sortCriteriaName: 'framework',
+    isDirectionDown: true,
+    priority: 10,
+  },
+  {
+    sortCriteriaName: 'date',
     isDirectionDown: true,
     priority: 10,
   },

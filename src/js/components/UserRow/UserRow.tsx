@@ -15,6 +15,7 @@ const HeadRow = (
     <TableHeadItem columnIndex={2} type="int" text="Score" />
     <TableHeadItem columnIndex={3} type="bool" text="Active" />
     <TableHeadItem columnIndex={4} type="enum" text="Framework" />
+    <TableHeadItem columnIndex={5} type="date" text="Enrollment date" />
   </TableRow>
 );
 
@@ -36,6 +37,7 @@ const UserRow = ({ index, style }: any) => {
       <TableCell className="table__cell int" component="div">{user.score}</TableCell>
       <TableCell className="table__cell bool" component="div">{user.isActive}</TableCell>
       <TableCell className="table__cell enum" component="div">{user.framework}</TableCell>
+      <TableCell className="table__cell date" component="div">{user.date}</TableCell>
     </TableRow>
   );
 };

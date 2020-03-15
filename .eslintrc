@@ -37,6 +37,7 @@
     "jsx-a11y/no-noninteractive-element-interactions": 0,
     "jsx-a11y/click-events-have-key-events": 0,
     "no-unused-vars": "off",
-    "no-undef": "off"
+    "no-undef": "off",
+    "max-classes-per-file": "off",
   }
 }
