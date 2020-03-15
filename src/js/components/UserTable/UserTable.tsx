@@ -1,4 +1,5 @@
 import React from 'react';
+import faker from 'faker';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -13,10 +14,9 @@ import UserRow from '../UserRow/UserRow';
 function UnVirtualizedList(Row, itemCount) {
   const rows: JSX.Element [] = [];
 
-  // TODO: change key to faker.name.findName()
-
   for (let i = 0; i < itemCount; i += 1) {
-    rows.push(<Row key={i} index={i} />);
+    faker.seed(i + 2);
+    rows.push(<Row key={faker.name.findName()} index={i} />);
   }
 
   return (
