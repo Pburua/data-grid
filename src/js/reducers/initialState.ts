@@ -32,7 +32,7 @@ const initialSortParams = [
     priority: 10,
   },
   {
-    sortCriteriaName: 'score',
+    sortCriteriaName: 'unconvertedScore',
     isDirectionDown: true,
     priority: 10,
   },
@@ -47,7 +47,7 @@ const initialSortParams = [
     priority: 10,
   },
   {
-    sortCriteriaName: 'date',
+    sortCriteriaName: 'unconvertedDate',
     isDirectionDown: true,
     priority: 10,
   },

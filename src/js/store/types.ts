@@ -7,11 +7,15 @@ class User {
 
   score: string;
 
+  unconvertedScore: number;
+
   isActive: string;
 
   framework: string;
 
   date: string;
+
+  unconvertedDate: moment.Moment;
 
   constructor(name: string,
     city: string,
@@ -20,8 +24,12 @@ class User {
     framework: 0 | 1 | 2,
     date: any) {
     this.name = name.toLowerCase();
+
     this.city = city.toLowerCase();
+
+    this.unconvertedScore = score;
     this.score = score.toLocaleString();
+
     this.isActive = isActive ? 'yes' : 'no';
     switch (framework) {
       case 0: {
@@ -36,7 +44,10 @@ class User {
         this.framework = 'both';
       }
     }
-    this.date = moment(date).format('DD-MM-YYYY');
+
+    const dateObject = moment(date);
+    this.unconvertedDate = dateObject;
+    this.date = dateObject.format('DD-MM-YYYY');
   }
 }
 

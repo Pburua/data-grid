@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { FilterCriteria, SortParameters, User } from '../store/types';
 
 function filtrate(data: User[], filterCriteria: FilterCriteria) {
@@ -20,20 +21,30 @@ function filtrate(data: User[], filterCriteria: FilterCriteria) {
   });
 }
 
-function compareNumbers(a, b) {
+function compareNumbers(a: number, b: number) {
   if (a > b) return 1;
   if (a < b) return -1;
   return 0;
 }
 
-function compareValues(a, b, isDirectionDown) {
-  const aNum = parseInt(a.replace(/\s/g, ''), 10);
+function compareDates(a: moment.Moment, b: moment.Moment) {
+  const daysDifference = a.diff(b, 'days', true);
+  if (daysDifference > 0) return 1;
+  if (daysDifference < 0) return -1;
+  return 0;
+}
 
-  if (aNum) {
-    const bNum = parseInt(b.replace(/\s/g, ''), 10);
-    if (isDirectionDown) return compareNumbers(aNum, bNum);
-    return compareNumbers(bNum, aNum);
+function compareValues(a, b, isDirectionDown, sortCriteriaName) {
+  if (sortCriteriaName === 'unconvertedScore') {
+    if (isDirectionDown) return compareNumbers(a, b);
+    return compareNumbers(b, a);
   }
+
+  if (sortCriteriaName === 'unconvertedDate') {
+    if (isDirectionDown) return compareDates(a, b);
+    return compareDates(b, a);
+  }
+
   if (isDirectionDown) return a.localeCompare(b);
   return b.localeCompare(a);
 }
@@ -58,6 +69,7 @@ function sortByCriteria(data: User[], sortParameters: SortParameters) {
         a[sortCriteriaArr[i].sortCriteriaName],
         b[sortCriteriaArr[i].sortCriteriaName],
         sortCriteriaArr[i].isDirectionDown,
+        sortCriteriaArr[i].sortCriteriaName,
       );
       if (compareResult !== 0) {
         return compareResult;
