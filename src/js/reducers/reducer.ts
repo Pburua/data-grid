@@ -2,7 +2,8 @@ import faker from 'faker';
 import {
   APPLY_ADDITIONAL_PRIORITY,
   APPLY_FIRST_PRIORITY,
-  INCREMENT, TOGGLE_VIRTUALIZATION, UPDATE_FILTERS, UPDATE_SORT_DIRECTION,
+  TOGGLE_VIRTUALIZATION,
+  UPDATE_FILTERS,
 } from '../actions/actionTypes';
 import { User, FilterCriteria, SortParameters } from '../store/types';
 
@@ -118,7 +119,6 @@ const initialSortParams = [
 const initialFilterCriteria = new FilterCriteria('', 'all', 'all');
 
 const initialState = {
-  counter: 0,
   isVirtualizeOn: true,
   filterCriteria: initialFilterCriteria,
   sortParameters: initialSortParams,
@@ -156,11 +156,6 @@ function rootReducer(prevState: any, action: any) {
   }
 
   switch (action.type) {
-    case INCREMENT:
-      return {
-        ...prevState,
-        counter: prevState.counter + 1,
-      };
     case TOGGLE_VIRTUALIZATION:
       return {
         ...prevState,
@@ -174,15 +169,6 @@ function rootReducer(prevState: any, action: any) {
         filterCriteria: action.filterCriteria,
         filtratedData,
         sortedAndFiltratedData: sortByCriteria(filtratedData, prevState.sortParameters),
-      };
-    }
-    case UPDATE_SORT_DIRECTION: {
-      const updatedArr: SortParameters = Array.from(prevState.sortParameters);
-      updatedArr[action.cellNumber].isDirectionDown = action.newDirection;
-      return {
-        ...prevState,
-        sortParameters: updatedArr,
-        sortedAndFiltratedData: sortByCriteria(prevState.filtratedData, updatedArr),
       };
     }
     case APPLY_FIRST_PRIORITY: {
