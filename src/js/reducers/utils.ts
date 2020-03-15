@@ -14,9 +14,7 @@ function filtrate(data: User[], filterCriteria: FilterCriteria) {
       && filterCriteria.isActive !== value.isActive
     ) return false;
 
-    // if (filterCriteria.framework !== 'all'
-    //   && filterCriteria.framework !== value.framework
-    // ) return false;
+    if (!filterCriteria.frameworks.includes(value.framework)) return false;
 
     return true;
   });
