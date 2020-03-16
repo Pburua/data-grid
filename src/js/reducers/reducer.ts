@@ -4,7 +4,7 @@ import {
   TOGGLE_VIRTUALIZATION,
   UPDATE_FILTERS,
 } from '../actions/actionTypes';
-import { ReduxStorage, SortParameters } from '../store/types';
+import { ReduxStorage, SortParameters, User } from '../store/types';
 import {
   filtrate,
   sortByCriteria,
@@ -12,11 +12,21 @@ import {
 // eslint-disable-next-line import/named
 import { initialState } from './initialState';
 
+function clearSelection(data: User[]) {
+  const newData = [...data];
+  for (let i = 0; i < newData.length; i += 1) {
+    newData[i].isSelected = false;
+  }
+  return newData;
+}
 
 function handleToggleVirtualization(prevState) {
+  const newData = clearSelection(prevState.data);
+
   return {
     ...prevState,
     isVirtualizeOn: !prevState.isVirtualizeOn,
+    data: newData,
   };
 }
 
@@ -56,17 +66,22 @@ function handleToggleRowSelection(prevState: ReduxStorage, action) {
 }
 
 function handleUpdateFilters(prevState, action) {
-  const filtratedData = filtrate(prevState.data, action.filterCriteria);
+  const newData = clearSelection(prevState.data);
+
+  const filtratedData = filtrate(newData, action.filterCriteria);
 
   return {
     ...prevState,
     filterCriteria: action.filterCriteria,
+    data: newData,
     filtratedData,
     sortedAndFiltratedData: sortByCriteria(filtratedData, prevState.sortParameters),
   };
 }
 
 function handleApplyFirstPriority(prevState, action) {
+  const newData = clearSelection(prevState.data);
+
   const updatedArr: SortParameters = prevState.sortParameters.map((value, index) => ({
     ...value,
     isDirectionDown:
@@ -74,8 +89,13 @@ function handleApplyFirstPriority(prevState, action) {
     priority:
       (index === action.cellNumber ? 1 : 10),
   }));
+
+  const filtratedData = filtrate(newData, prevState.filterCriteria);
+
   return {
     ...prevState,
+    data: newData,
+    filtratedData,
     sortParameters: updatedArr,
     sortedAndFiltratedData: sortByCriteria(prevState.filtratedData, updatedArr),
   };
@@ -97,8 +117,14 @@ function handleApplyAdditionalPriority(prevState, action) {
       (index === action.cellNumber && value.priority === 10 ? maxPriority + 1 : value.priority),
   }));
 
+  const newData = clearSelection(prevState.data);
+
+  const filtratedData = filtrate(newData, prevState.filterCriteria);
+
   return {
     ...prevState,
+    data: newData,
+    filtratedData,
     sortParameters: updatedArr,
     sortedAndFiltratedData: sortByCriteria(prevState.filtratedData, updatedArr),
   };
