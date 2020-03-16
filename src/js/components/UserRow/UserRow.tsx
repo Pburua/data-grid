@@ -8,6 +8,7 @@ import './UserRow.scss';
 import { toggleRowSelection } from '../../actions/actions';
 import store from '../../store/store';
 import { User } from '../../store/types';
+import { removeUserSelection } from '../../reducers/utils';
 
 const columnData = [
   { type: 'name', text: 'Name', fieldName: 'name' },
@@ -51,8 +52,13 @@ const UserRow = ({ index, style, rowsSelection }: any) => {
 
   if (isSelected) rowClassName += ' selected';
 
-  function handleTableRowClick() {
-    toggleRowSelection(index - 1);
+  function handleTableRowClick(event) {
+    if (event.shiftKey) {
+      removeUserSelection();
+      toggleRowSelection(index - 1, false);
+    } else {
+      toggleRowSelection(index - 1, true);
+    }
   }
 
   return (

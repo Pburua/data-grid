@@ -89,4 +89,4 @@ const initialState = {
   rowsSelection: initialRowsSelection,
 };
 
-export default initialState;
+export { initialState, ROW_NUMBER };

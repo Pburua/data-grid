@@ -20,7 +20,9 @@ const BottomPanel = (props: any) => {
         />
       </div>
       <div className="bottom-panel__column">
-        Hotkeys: press SHIFT and click on table header to sort by multiple columns
+        <div>Hotkeys:</div>
+        <div>SHIFT and click on table header to sort by multiple columns</div>
+        <div>SHIFT and click on table row to select multiple rows</div>
       </div>
     </div>
   );

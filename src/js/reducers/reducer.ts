@@ -9,7 +9,8 @@ import {
   filtrate,
   sortByCriteria,
 } from './utils';
-import initialState from './initialState';
+// eslint-disable-next-line import/named
+import { initialState, ROW_NUMBER } from './initialState';
 
 
 function handleToggleVirtualization(prevState) {
@@ -20,7 +21,12 @@ function handleToggleVirtualization(prevState) {
 }
 
 function handleToggleRowSelection(prevState, action) {
-  const newRowsSelection = [...prevState.rowsSelection];
+  let newRowsSelection;
+  if (action.isSingleSelection) {
+    newRowsSelection = new Array(ROW_NUMBER).fill(false);
+  } else {
+    newRowsSelection = [...prevState.rowsSelection];
+  }
 
   newRowsSelection[action.index] = !newRowsSelection[action.index];
 

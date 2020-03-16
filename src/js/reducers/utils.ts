@@ -84,7 +84,17 @@ function sortByCriteria(data: User[], sortParameters: SortParameters) {
   });
 }
 
+function removeUserSelection() {
+  const s = window.getSelection();
+  if (s && s.rangeCount > 0) {
+    for (let i = 0; i < s.rangeCount; i += 1) {
+      s.removeRange(s.getRangeAt(i));
+    }
+  }
+}
+
 export {
   filtrate,
   sortByCriteria,
+  removeUserSelection,
 };
