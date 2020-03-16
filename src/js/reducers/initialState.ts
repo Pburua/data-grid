@@ -77,7 +77,7 @@ const initialFiltratedData: User[] = filtrate([...filledArr], initialFilterCrite
 const initialSortedAndFiltratedData: User[] = sortByCriteria([...initialFiltratedData],
   initialSortParams);
 
-const initialRowsState = new Array(ROW_NUMBER).fill(0);
+const initialRowsSelection: false[] = new Array(ROW_NUMBER).fill(false);
 
 const initialState = {
   isVirtualizeOn: true,
@@ -86,7 +86,7 @@ const initialState = {
   data: filledArr,
   filtratedData: initialFiltratedData,
   sortedAndFiltratedData: initialSortedAndFiltratedData,
-  rowsState: initialRowsState,
+  rowsSelection: initialRowsSelection,
 };
 
 export default initialState;

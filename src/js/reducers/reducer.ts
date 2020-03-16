@@ -1,6 +1,6 @@
 import {
   APPLY_ADDITIONAL_PRIORITY,
-  APPLY_FIRST_PRIORITY,
+  APPLY_FIRST_PRIORITY, TOGGLE_ROW_SELECTION,
   TOGGLE_VIRTUALIZATION,
   UPDATE_FILTERS,
 } from '../actions/actionTypes';
@@ -16,6 +16,17 @@ function handleToggleVirtualization(prevState) {
   return {
     ...prevState,
     isVirtualizeOn: !prevState.isVirtualizeOn,
+  };
+}
+
+function handleToggleRowSelection(prevState, action) {
+  const newRowsSelection = [...prevState.rowsSelection];
+
+  newRowsSelection[action.index] = !newRowsSelection[action.index];
+
+  return {
+    ...prevState,
+    rowsSelection: newRowsSelection,
   };
 }
 
@@ -77,6 +88,9 @@ function rootReducer(prevState: any, action: any) {
   switch (action.type) {
     case TOGGLE_VIRTUALIZATION: {
       return handleToggleVirtualization(prevState);
+    }
+    case TOGGLE_ROW_SELECTION: {
+      return handleToggleRowSelection(prevState, action);
     }
     case UPDATE_FILTERS: {
       return handleUpdateFilters(prevState, action);

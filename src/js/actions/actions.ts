@@ -2,13 +2,21 @@ import {
   TOGGLE_VIRTUALIZATION,
   UPDATE_FILTERS,
   APPLY_FIRST_PRIORITY,
-  APPLY_ADDITIONAL_PRIORITY,
+  APPLY_ADDITIONAL_PRIORITY, TOGGLE_ROW_SELECTION,
 } from './actionTypes';
 import store from '../store/store';
 
 export function toggleVirtualization() {
   const action = {
     type: TOGGLE_VIRTUALIZATION,
+  };
+  store.dispatch(action);
+}
+
+export function toggleRowSelection(index) {
+  const action = {
+    type: TOGGLE_ROW_SELECTION,
+    index,
   };
   store.dispatch(action);
 }

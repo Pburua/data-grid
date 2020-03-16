@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import faker from 'faker';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import store from '../../store/store';
-// eslint-disable-next-line no-unused-vars
-import { User } from '../../store/types';
 import TableHeadItem from '../TableHeadItem/TableHeadItem';
 import './UserRow.scss';
+import { toggleRowSelection } from '../../actions/actions';
+import store from '../../store/store';
+import { User } from '../../store/types';
 
 const columnData = [
   { type: 'name', text: 'Name', fieldName: 'name' },
@@ -33,26 +34,26 @@ const HeadRow = (
   </TableRow>
 );
 
-const UserRow = ({ index, style }: any) => {
+const UserRow = ({ index, style, rowsSelection }: any) => {
   if (index === 0) {
     return (
       <>{HeadRow}</>
     );
   }
 
-  const [isSelected, setIsSelected] = useState(false);
-
-  function handleTableRowClick() {
-    setIsSelected(!isSelected);
-  }
-
   faker.seed(index + 1);
 
   const user: User = store.getState().sortedAndFiltratedData[index - 1];
 
+  const isSelected = rowsSelection[index - 1];
+
   let rowClassName = 'table__row';
 
   if (isSelected) rowClassName += ' selected';
+
+  function handleTableRowClick() {
+    toggleRowSelection(index - 1);
+  }
 
   return (
     <TableRow className={rowClassName} key={index} onClick={handleTableRowClick} component="div" style={style}>
@@ -69,4 +70,8 @@ const UserRow = ({ index, style }: any) => {
   );
 };
 
-export default UserRow;
+const mapStateToProps = (state: any) => ({
+  rowsSelection: state.rowsSelection,
+});
+
+export default connect(mapStateToProps)(UserRow);
