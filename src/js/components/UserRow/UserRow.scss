@@ -3,8 +3,13 @@
  &__row {
   display: flex !important;
 
-  &:not(.table-head):hover {
-   background: #e5e5e5;
+  &:not(.table-head) {
+   &:hover {
+    background: #e5e5e5;
+   }
+   &.selected {
+    background: #b4b1e5;
+   }
   }
  }
 

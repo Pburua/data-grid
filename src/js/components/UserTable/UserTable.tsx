@@ -47,6 +47,7 @@ function VirtualizedListWrapper(length) {
 const UserTable = (props: any) => {
   const { isVirtualizeOn, sortedAndFiltratedData } = props;
 
+
   return (
     <TableContainer className="table-container" component={Paper}>
       <Table className="table" aria-label="simple table" component="div">

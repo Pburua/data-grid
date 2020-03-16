@@ -3,11 +3,11 @@ import {
   filtrate,
   sortByCriteria,
 } from './utils';
-import { FilterCriteria, User } from '../store/types';
+import { FilterCriteria, SortParameters, User } from '../store/types';
 
-const emptyArr = new Array(100).fill(undefined);
+const ROW_NUMBER = 100;
 
-const filledArr = emptyArr.map((_value, index) => {
+const filledArr: User[] = new Array(ROW_NUMBER).fill(undefined).map((_value, index) => {
   faker.seed(index + 2);
 
   return new User(
@@ -22,7 +22,7 @@ const filledArr = emptyArr.map((_value, index) => {
   );
 });
 
-const initialSortParams = [
+const initialSortParams: SortParameters = [
   {
     sortCriteriaName: 'name',
     isDirectionDown: true,
@@ -70,15 +70,23 @@ const initialSortParams = [
   },
 ];
 
-const initialFilterCriteria = new FilterCriteria('', 'all', ['react', 'angular', 'both']);
+const initialFilterCriteria: FilterCriteria = new FilterCriteria('', 'all', ['react', 'angular', 'both']);
+
+const initialFiltratedData: User[] = filtrate([...filledArr], initialFilterCriteria);
+
+const initialSortedAndFiltratedData: User[] = sortByCriteria([...initialFiltratedData],
+  initialSortParams);
+
+const initialRowsState = new Array(ROW_NUMBER).fill(0);
 
 const initialState = {
   isVirtualizeOn: true,
   filterCriteria: initialFilterCriteria,
   sortParameters: initialSortParams,
-  data: [...filledArr],
-  filtratedData: filtrate([...filledArr], initialFilterCriteria),
-  sortedAndFiltratedData: sortByCriteria([...filledArr], initialSortParams),
+  data: filledArr,
+  filtratedData: initialFiltratedData,
+  sortedAndFiltratedData: initialSortedAndFiltratedData,
+  rowsState: initialRowsState,
 };
 
 export default initialState;

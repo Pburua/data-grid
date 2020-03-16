@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import faker from 'faker';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
@@ -8,17 +8,28 @@ import { User } from '../../store/types';
 import TableHeadItem from '../TableHeadItem/TableHeadItem';
 import './UserRow.scss';
 
+const columnData = [
+  { type: 'name', text: 'Name', fieldName: 'name' },
+  { type: 'name', text: 'City', fieldName: 'city' },
+  { type: 'int', text: 'Task 1', fieldName: 'taskScore1' },
+  { type: 'int', text: 'Task 2', fieldName: 'taskScore2' },
+  { type: 'int', text: 'Task 3', fieldName: 'taskScore3' },
+  { type: 'int', text: 'Total', fieldName: 'totalScore' },
+  { type: 'bool', text: 'Active', fieldName: 'isActive' },
+  { type: 'enum', text: 'Framework', fieldName: 'framework' },
+  { type: 'date', text: 'Enrollment date', fieldName: 'date' },
+];
+
 const HeadRow = (
   <TableRow className="table__row table-head" key={0} component="div">
-    <TableHeadItem columnIndex={0} type="name" text="Name" />
-    <TableHeadItem columnIndex={1} type="name" text="City" />
-    <TableHeadItem columnIndex={2} type="int" text="Task 1" />
-    <TableHeadItem columnIndex={3} type="int" text="Task 2" />
-    <TableHeadItem columnIndex={4} type="int" text="Task 3" />
-    <TableHeadItem columnIndex={5} type="int" text="Total" />
-    <TableHeadItem columnIndex={6} type="bool" text="Active" />
-    <TableHeadItem columnIndex={7} type="enum" text="Framework" />
-    <TableHeadItem columnIndex={8} type="date" text="Enrollment date" />
+    {columnData.map((value, index) => (
+      <TableHeadItem
+        key={value.fieldName}
+        columnIndex={index}
+        type={value.type}
+        text={value.text}
+      />
+    ))}
   </TableRow>
 );
 
@@ -29,21 +40,31 @@ const UserRow = ({ index, style }: any) => {
     );
   }
 
+  const [isSelected, setIsSelected] = useState(false);
+
+  function handleTableRowClick() {
+    setIsSelected(!isSelected);
+  }
+
   faker.seed(index + 1);
 
-  const user : User = store.getState().sortedAndFiltratedData[index - 1];
+  const user: User = store.getState().sortedAndFiltratedData[index - 1];
+
+  let rowClassName = 'table__row';
+
+  if (isSelected) rowClassName += ' selected';
 
   return (
-    <TableRow className="table__row" key={index} component="div" style={style}>
-      <TableCell className="table__cell name" component="div">{user.name}</TableCell>
-      <TableCell className="table__cell name" component="div">{user.city}</TableCell>
-      <TableCell className="table__cell int" component="div">{user.taskScore1}</TableCell>
-      <TableCell className="table__cell int" component="div">{user.taskScore2}</TableCell>
-      <TableCell className="table__cell int" component="div">{user.taskScore3}</TableCell>
-      <TableCell className="table__cell int" component="div">{user.totalScore}</TableCell>
-      <TableCell className="table__cell bool" component="div">{user.isActive}</TableCell>
-      <TableCell className="table__cell enum" component="div">{user.framework}</TableCell>
-      <TableCell className="table__cell date" component="div">{user.date}</TableCell>
+    <TableRow className={rowClassName} key={index} onClick={handleTableRowClick} component="div" style={style}>
+      {columnData.map((value) => (
+        <TableCell
+          className={`table__cell ${value.type}`}
+          key={value.fieldName}
+          component="div"
+        >
+          {user[value.fieldName]}
+        </TableCell>
+      ))}
     </TableRow>
   );
 };
