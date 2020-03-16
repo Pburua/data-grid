@@ -6,7 +6,6 @@ import TableRow from '@material-ui/core/TableRow';
 import TableHeadItem from '../TableHeadItem/TableHeadItem';
 import './UserRow.scss';
 import { toggleRowSelection } from '../../actions/actions';
-import store from '../../store/store';
 import { User } from '../../store/types';
 import { removeUserSelection } from '../../reducers/utils';
 
@@ -35,7 +34,7 @@ const HeadRow = (
   </TableRow>
 );
 
-const UserRow = ({ index, style, rowsSelection }: any) => {
+const UserRow = ({ index, style, sortedAndFiltratedData }: any) => {
   if (index === 0) {
     return (
       <>{HeadRow}</>
@@ -44,9 +43,9 @@ const UserRow = ({ index, style, rowsSelection }: any) => {
 
   faker.seed(index + 1);
 
-  const user: User = store.getState().sortedAndFiltratedData[index - 1];
+  const user: User = sortedAndFiltratedData[index - 1];
 
-  const isSelected = rowsSelection[index - 1];
+  const { isSelected } = user;
 
   let rowClassName = 'table__row';
 
@@ -55,9 +54,9 @@ const UserRow = ({ index, style, rowsSelection }: any) => {
   function handleTableRowClick(event) {
     if (event.shiftKey) {
       removeUserSelection();
-      toggleRowSelection(index - 1, false);
+      toggleRowSelection(user.name, false);
     } else {
-      toggleRowSelection(index - 1, true);
+      toggleRowSelection(user.name, true);
     }
   }
 
@@ -77,7 +76,7 @@ const UserRow = ({ index, style, rowsSelection }: any) => {
 };
 
 const mapStateToProps = (state: any) => ({
-  rowsSelection: state.rowsSelection,
+  sortedAndFiltratedData: state.sortedAndFiltratedData,
 });
 
 export default connect(mapStateToProps)(UserRow);

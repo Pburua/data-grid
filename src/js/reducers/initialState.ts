@@ -19,6 +19,7 @@ const filledArr: User[] = new Array(ROW_NUMBER).fill(undefined).map((_value, ind
     faker.random.boolean(),
     faker.random.number({ min: 0, max: 2 }),
     faker.date.recent(30),
+    false,
   );
 });
 
@@ -77,8 +78,6 @@ const initialFiltratedData: User[] = filtrate([...filledArr], initialFilterCrite
 const initialSortedAndFiltratedData: User[] = sortByCriteria([...initialFiltratedData],
   initialSortParams);
 
-const initialRowsSelection: false[] = new Array(ROW_NUMBER).fill(false);
-
 const initialState = {
   isVirtualizeOn: true,
   filterCriteria: initialFilterCriteria,
@@ -86,7 +85,6 @@ const initialState = {
   data: filledArr,
   filtratedData: initialFiltratedData,
   sortedAndFiltratedData: initialSortedAndFiltratedData,
-  rowsSelection: initialRowsSelection,
 };
 
 export { initialState, ROW_NUMBER };

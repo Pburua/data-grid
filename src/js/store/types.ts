@@ -29,6 +29,8 @@ class User {
 
   unconvertedDate: moment.Moment;
 
+  isSelected: boolean;
+
   constructor(name: string,
     city: string,
     taskScore1: number,
@@ -36,7 +38,8 @@ class User {
     taskScore3: number,
     isActive: boolean,
     framework: 0 | 1 | 2,
-    date: any) {
+    date: any,
+    isSelected: boolean) {
     this.name = name.toLowerCase();
 
     this.city = city.toLowerCase();
@@ -72,6 +75,8 @@ class User {
     const dateObject = moment(date);
     this.unconvertedDate = dateObject;
     this.date = dateObject.format('DD-MM-YYYY');
+
+    this.isSelected = isSelected;
   }
 }
 
@@ -102,4 +107,13 @@ interface SortParameters {
   [Symbol.iterator]();
 }
 
-export { User, FilterCriteria, SortParameters };
+interface ReduxStorage {
+  isVirtualizeOn: boolean;
+  filterCriteria: FilterCriteria,
+  sortParameters: SortParameters,
+  data: User[],
+  filtratedData: User[],
+  sortedAndFiltratedData: User[],
+}
+
+export { User, FilterCriteria, SortParameters, ReduxStorage };

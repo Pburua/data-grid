@@ -13,10 +13,10 @@ export function toggleVirtualization() {
   store.dispatch(action);
 }
 
-export function toggleRowSelection(index, isSingleSelection) {
+export function toggleRowSelection(rowId, isSingleSelection) {
   const action = {
     type: TOGGLE_ROW_SELECTION,
-    index,
+    rowId,
     isSingleSelection,
   };
   store.dispatch(action);

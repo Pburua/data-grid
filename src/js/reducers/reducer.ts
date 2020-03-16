@@ -4,13 +4,13 @@ import {
   TOGGLE_VIRTUALIZATION,
   UPDATE_FILTERS,
 } from '../actions/actionTypes';
-import { SortParameters } from '../store/types';
+import { ReduxStorage, SortParameters } from '../store/types';
 import {
   filtrate,
   sortByCriteria,
 } from './utils';
 // eslint-disable-next-line import/named
-import { initialState, ROW_NUMBER } from './initialState';
+import { initialState } from './initialState';
 
 
 function handleToggleVirtualization(prevState) {
@@ -20,19 +20,38 @@ function handleToggleVirtualization(prevState) {
   };
 }
 
-function handleToggleRowSelection(prevState, action) {
-  let newRowsSelection;
+function handleToggleRowSelection(prevState: ReduxStorage, action) {
+  const newData = [...prevState.data];
+
   if (action.isSingleSelection) {
-    newRowsSelection = new Array(ROW_NUMBER).fill(false);
+    // очистить все
+    for (let i = 0; i < newData.length; i += 1) {
+      newData[i].isSelected = false;
+    }
+    // выделить одну
+    for (let i = 0; i < newData.length; i += 1) {
+      if (newData[i].name === action.rowId) {
+        newData[i].isSelected = true;
+        break;
+      }
+    }
   } else {
-    newRowsSelection = [...prevState.rowsSelection];
+    // выделить одну
+    for (let i = 0; i < newData.length; i += 1) {
+      if (newData[i].name === action.rowId) {
+        newData[i].isSelected = true;
+        break;
+      }
+    }
   }
 
-  newRowsSelection[action.index] = !newRowsSelection[action.index];
+  const filtratedData = filtrate(newData, prevState.filterCriteria);
 
   return {
     ...prevState,
-    rowsSelection: newRowsSelection,
+    data: newData,
+    filtratedData,
+    sortedAndFiltratedData: sortByCriteria(filtratedData, prevState.sortParameters),
   };
 }
 
