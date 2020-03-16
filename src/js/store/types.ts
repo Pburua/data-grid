@@ -103,6 +103,7 @@ interface SortParameters {
 
   sort: any;
   length: number;
+  map: any;
 
   [Symbol.iterator]();
 }
@@ -116,4 +117,6 @@ interface ReduxStorage {
   sortedAndFiltratedData: User[],
 }
 
-export { User, FilterCriteria, SortParameters, ReduxStorage };
+export {
+  User, FilterCriteria, SortParameters, ReduxStorage,
+};

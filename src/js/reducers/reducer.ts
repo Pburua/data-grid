@@ -1,6 +1,6 @@
 import {
   APPLY_ADDITIONAL_PRIORITY,
-  APPLY_FIRST_PRIORITY, TOGGLE_ROW_SELECTION,
+  APPLY_FIRST_PRIORITY, DELETE_SELECTED_ROWS, TOGGLE_ROW_SELECTION,
   TOGGLE_VIRTUALIZATION,
   UPDATE_FILTERS,
 } from '../actions/actionTypes';
@@ -20,7 +20,7 @@ function clearSelection(data: User[]) {
   return newData;
 }
 
-function handleToggleVirtualization(prevState) {
+function handleToggleVirtualization(prevState: ReduxStorage) {
   const newData = clearSelection(prevState.data);
 
   return {
@@ -65,7 +65,7 @@ function handleToggleRowSelection(prevState: ReduxStorage, action) {
   };
 }
 
-function handleUpdateFilters(prevState, action) {
+function handleUpdateFilters(prevState: ReduxStorage, action) {
   const newData = clearSelection(prevState.data);
 
   const filtratedData = filtrate(newData, action.filterCriteria);
@@ -79,7 +79,7 @@ function handleUpdateFilters(prevState, action) {
   };
 }
 
-function handleApplyFirstPriority(prevState, action) {
+function handleApplyFirstPriority(prevState: ReduxStorage, action) {
   const newData = clearSelection(prevState.data);
 
   const updatedArr: SortParameters = prevState.sortParameters.map((value, index) => ({
@@ -101,7 +101,7 @@ function handleApplyFirstPriority(prevState, action) {
   };
 }
 
-function handleApplyAdditionalPriority(prevState, action) {
+function handleApplyAdditionalPriority(prevState: ReduxStorage, action) {
   let maxPriority = 0;
 
   for (let i = 0; i < prevState.sortParameters.length; i += 1) {
@@ -130,8 +130,20 @@ function handleApplyAdditionalPriority(prevState, action) {
   };
 }
 
+function handleDeleteSelectedRows(prevState: ReduxStorage) {
+  const newData = prevState.data.filter((value) => !value.isSelected);
 
-function rootReducer(prevState: any, action: any) {
+  const filtratedData = filtrate(newData, prevState.filterCriteria);
+
+  return {
+    ...prevState,
+    data: newData,
+    filtratedData,
+    sortedAndFiltratedData: sortByCriteria(filtratedData, prevState.sortParameters),
+  };
+}
+
+function rootReducer(prevState: ReduxStorage, action: any) {
   if (typeof prevState === 'undefined') {
     return initialState;
   }
@@ -151,6 +163,9 @@ function rootReducer(prevState: any, action: any) {
     }
     case APPLY_ADDITIONAL_PRIORITY: {
       return handleApplyAdditionalPriority(prevState, action);
+    }
+    case DELETE_SELECTED_ROWS: {
+      return handleDeleteSelectedRows(prevState);
     }
     default:
       return prevState;

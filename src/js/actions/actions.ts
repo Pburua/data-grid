@@ -2,7 +2,7 @@ import {
   TOGGLE_VIRTUALIZATION,
   UPDATE_FILTERS,
   APPLY_FIRST_PRIORITY,
-  APPLY_ADDITIONAL_PRIORITY, TOGGLE_ROW_SELECTION,
+  APPLY_ADDITIONAL_PRIORITY, TOGGLE_ROW_SELECTION, DELETE_SELECTED_ROWS,
 } from './actionTypes';
 import store from '../store/store';
 
@@ -42,6 +42,13 @@ export function applyAdditionalPriority(cellNumber) {
   const action = {
     type: APPLY_ADDITIONAL_PRIORITY,
     cellNumber,
+  };
+  store.dispatch(action);
+}
+
+export function deleteSelectedRows() {
+  const action = {
+    type: DELETE_SELECTED_ROWS,
   };
   store.dispatch(action);
 }
