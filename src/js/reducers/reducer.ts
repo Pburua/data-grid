@@ -1,7 +1,7 @@
 import {
   APPLY_ADDITIONAL_PRIORITY,
   APPLY_FIRST_PRIORITY, DELETE_SELECTED_ROWS, TOGGLE_ROW_SELECTION,
-  TOGGLE_VIRTUALIZATION,
+  TOGGLE_VIRTUALIZATION, UPDATE_COLUMN_DATA,
   UPDATE_FILTERS,
 } from '../actions/actionTypes';
 import { ReduxStorage, SortParameter, User } from '../store/types';
@@ -143,6 +143,13 @@ function handleDeleteSelectedRows(prevState: ReduxStorage) {
   };
 }
 
+function handleUpdateColumnData(prevState: ReduxStorage, action) {
+  return {
+    ...prevState,
+    columnData: action.newColumnData,
+  };
+}
+
 function rootReducer(prevState: ReduxStorage, action: any) {
   if (typeof prevState === 'undefined') {
     return initialState;
@@ -166,6 +173,9 @@ function rootReducer(prevState: ReduxStorage, action: any) {
     }
     case DELETE_SELECTED_ROWS: {
       return handleDeleteSelectedRows(prevState);
+    }
+    case UPDATE_COLUMN_DATA: {
+      return handleUpdateColumnData(prevState, action);
     }
     default:
       return prevState;

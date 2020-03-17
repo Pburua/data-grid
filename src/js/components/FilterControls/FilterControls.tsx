@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import { updateFilters } from '../../actions/actions';
+import { updateColumnData, updateFilters } from '../../actions/actions';
 import './FilterControls.scss';
 import { ColumnData, FilterCriteria, ReduxStorage } from '../../store/types';
 
@@ -92,6 +92,16 @@ const FilterControls = ({ filterCriteria, columnData }: FilterControlsProps) => 
     });
   }
 
+  function handleVisibleColumnsChange(event) {
+    const selectedColumns = event.target.value;
+    const newColumnData = columnData.map((value) => ({
+      ...value,
+      visible: selectedColumns.includes(value.fieldName),
+    }));
+
+    updateColumnData(newColumnData);
+  }
+
   return (
     <Container className="filter-controls">
 
@@ -162,7 +172,7 @@ const FilterControls = ({ filterCriteria, columnData }: FilterControlsProps) => 
             input={<Input />}
             MenuProps={MenuProps}
             renderValue={(selected: any) => selected.join(', ')}
-            onChange={handleFrameworksChange}
+            onChange={handleVisibleColumnsChange}
           >
             {columnData.map((option: ColumnData) => (
               <MenuItem key={option.fieldName} value={option.fieldName}>
