@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import {
   Checkbox,
@@ -63,6 +63,10 @@ interface FilterControlsProps {
 
 const FilterControls = ({ filterCriteria, columnData }: FilterControlsProps) => {
   const [searchText, setSearchText] = useState('');
+
+  useEffect(() => {
+    setSearchText(filterCriteria.searchText);
+  }, []);
 
   function update(changedFilter) {
     updateFilters({

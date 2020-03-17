@@ -80,18 +80,12 @@ class User {
   }
 }
 
-class FilterCriteria {
+interface FilterCriteria {
   searchText: string;
 
   isActive: string;
 
   frameworks: string[];
-
-  constructor(searchText, isActive, frameworks) {
-    this.searchText = searchText;
-    this.isActive = isActive;
-    this.frameworks = frameworks;
-  }
 }
 
 interface SortParameter {
@@ -109,12 +103,12 @@ interface ColumnData {
 
 interface ReduxStorage {
   isVirtualizeOn: boolean;
-  filterCriteria: FilterCriteria,
-  sortParameters: SortParameter[],
+  filterCriteria: FilterCriteria, // local storage
+  sortParameters: SortParameter[], // local storage
   data: User[],
   filtratedData: User[],
   sortedAndFiltratedData: User[],
-  columnData: ColumnData[],
+  columnData: ColumnData[], // local storage
 }
 
 export {
