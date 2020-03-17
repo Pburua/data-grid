@@ -7,7 +7,7 @@ import {
   ColumnData, FilterCriteria, SortParameter, User,
 } from '../store/types';
 
-const ROW_NUMBER = 100;
+const ROW_NUMBER = 1000;
 
 let loadedItem;
 
