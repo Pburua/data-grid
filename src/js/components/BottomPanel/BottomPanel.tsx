@@ -4,21 +4,33 @@ import { Button, Switch } from '@material-ui/core';
 import { deleteSelectedRows, toggleVirtualization } from '../../actions/actions';
 import './BottomPanel.scss';
 import store from '../../store/store';
-import { User } from '../../store/types';
+import { ColumnData, User } from '../../store/types';
 
 const BottomPanel = (props: any) => {
   const { isVirtualizeOn } = props;
 
   function exportToCsv() {
+    const columnData: ColumnData[] = [...store.getState().columnData];
+    const visibleColumnData: ColumnData[] = columnData.filter((item: ColumnData) => item.visible);
+
+    let csvHeader = visibleColumnData
+      .map((item: ColumnData) => (item.text))
+      .join(',');
+
+    csvHeader += '\n';
+
     const data = store.getState().sortedAndFiltratedData;
+    const visibleColumns = visibleColumnData.map((item: ColumnData) => (item.fieldName));
 
-    const csvData = data.map((user: User) => (
-      `${user.name},${user.city},${user.unconvertedTaskScore1},${user.unconvertedTaskScore1
-      },${user.unconvertedTaskScore1},${user.unconvertedTotalScore},${user.isActive
-      },${user.framework},${user.date}`
-    ));
-
-    const csvHeader = 'name,city,taskScore1,taskScore2,taskScore3,totalScore,isActive,framework,enrollmentDate\n';
+    const csvData = data.map((user: User) => {
+      let rowStr = '';
+      for (let i = 0; i < visibleColumns.length; i += 1) {
+        rowStr += user[visibleColumns[i]];
+        rowStr += ',';
+      }
+      rowStr = rowStr.slice(0, -1);
+      return rowStr;
+    });
 
     const csvContent = `data:text/csv;charset=utf-8,${csvHeader}${csvData.join('\n')}`;
 
