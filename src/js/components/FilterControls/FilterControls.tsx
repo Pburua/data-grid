@@ -15,6 +15,7 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import { updateFilters } from '../../actions/actions';
 import './FilterControls.scss';
+import { ColumnData, FilterCriteria, ReduxStorage } from '../../store/types';
 
 const isActiveValues = [
   {
@@ -55,8 +56,12 @@ const MenuProps = {
   },
 };
 
-const FilterControls = (props: any) => {
-  const { filterCriteria } = props;
+interface FilterControlsProps {
+  filterCriteria: FilterCriteria;
+  columnData: ColumnData[];
+}
+
+const FilterControls = ({ filterCriteria, columnData }: FilterControlsProps) => {
   const [searchText, setSearchText] = useState('');
 
   function update(changedFilter) {
@@ -145,12 +150,37 @@ const FilterControls = (props: any) => {
         </FormControl>
       </div>
 
+      <div className="filter-controls__item">
+        <FormControl>
+          <InputLabel id="visible-columns-select-label">Visible columns</InputLabel>
+          <Select
+            labelId="visible-columns-select-label"
+            id="visible-columns-select"
+            className="filter-controls__multiple-checkbox"
+            multiple
+            value={columnData.map((item: ColumnData) => (item.fieldName))}
+            input={<Input />}
+            MenuProps={MenuProps}
+            renderValue={(selected: any) => selected.join(', ')}
+            onChange={handleFrameworksChange}
+          >
+            {columnData.map((option: ColumnData) => (
+              <MenuItem key={option.fieldName} value={option.fieldName}>
+                <Checkbox checked={option.visible} />
+                <ListItemText primary={option.text} />
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
+
     </Container>
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ReduxStorage) => ({
   filterCriteria: state.filterCriteria,
+  columnData: state.columnData,
 });
 
 export default connect(mapStateToProps)(FilterControls);

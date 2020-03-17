@@ -108,6 +108,13 @@ interface SortParameters {
   [Symbol.iterator]();
 }
 
+interface ColumnData {
+  type: string;
+  text: string;
+  fieldName: string;
+  visible: boolean;
+}
+
 interface ReduxStorage {
   isVirtualizeOn: boolean;
   filterCriteria: FilterCriteria,
@@ -115,8 +122,9 @@ interface ReduxStorage {
   data: User[],
   filtratedData: User[],
   sortedAndFiltratedData: User[],
+  columnData: ColumnData[],
 }
 
 export {
-  User, FilterCriteria, SortParameters, ReduxStorage,
+  User, FilterCriteria, SortParameters, ReduxStorage, ColumnData
 };

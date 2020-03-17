@@ -6,38 +6,24 @@ import TableRow from '@material-ui/core/TableRow';
 import TableHeadItem from '../TableHeadItem/TableHeadItem';
 import './UserRow.scss';
 import { toggleRowSelection } from '../../actions/actions';
-import { User } from '../../store/types';
+import { ReduxStorage, User } from '../../store/types';
 import { removeUserSelection } from '../../reducers/utils';
 
-const columnData = [
-  { type: 'name', text: 'Name', fieldName: 'name' },
-  { type: 'name', text: 'City', fieldName: 'city' },
-  { type: 'int', text: 'Task 1', fieldName: 'taskScore1' },
-  { type: 'int', text: 'Task 2', fieldName: 'taskScore2' },
-  { type: 'int', text: 'Task 3', fieldName: 'taskScore3' },
-  { type: 'int', text: 'Total', fieldName: 'totalScore' },
-  { type: 'bool', text: 'Active', fieldName: 'isActive' },
-  { type: 'enum', text: 'Framework', fieldName: 'framework' },
-  { type: 'date', text: 'Enrollment date', fieldName: 'date' },
-];
-
-const HeadRow = (
-  <TableRow className="table__row table-head" key={0} component="div">
-    {columnData.map((value, index) => (
-      <TableHeadItem
-        key={value.fieldName}
-        columnIndex={index}
-        type={value.type}
-        text={value.text}
-      />
-    ))}
-  </TableRow>
-);
-
-const UserRow = ({ index, style, sortedAndFiltratedData }: any) => {
+const UserRow = ({
+  index, style, columnData, sortedAndFiltratedData,
+}: any) => {
   if (index === 0) {
     return (
-      <>{HeadRow}</>
+      <TableRow className="table__row table-head" key={0} component="div">
+        {columnData.map((value, colIndex) => (
+          <TableHeadItem
+            key={value.fieldName}
+            columnIndex={colIndex}
+            type={value.type}
+            text={value.text}
+          />
+        ))}
+      </TableRow>
     );
   }
 
@@ -75,8 +61,9 @@ const UserRow = ({ index, style, sortedAndFiltratedData }: any) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: ReduxStorage) => ({
   sortedAndFiltratedData: state.sortedAndFiltratedData,
+  columnData: state.columnData,
 });
 
 export default connect(mapStateToProps)(UserRow);

@@ -3,7 +3,7 @@ import {
   filtrate,
   sortByCriteria,
 } from './utils';
-import { FilterCriteria, SortParameters, User } from '../store/types';
+import { ColumnData, FilterCriteria, SortParameters, User } from '../store/types';
 
 const ROW_NUMBER = 100;
 
@@ -78,10 +78,41 @@ const initialFiltratedData: User[] = filtrate([...filledArr], initialFilterCrite
 const initialSortedAndFiltratedData: User[] = sortByCriteria([...initialFiltratedData],
   initialSortParams);
 
+const initialColumns: ColumnData[] = [
+  {
+    type: 'name', text: 'Name', fieldName: 'name', visible: true,
+  },
+  {
+    type: 'name', text: 'City', fieldName: 'city', visible: true,
+  },
+  {
+    type: 'int', text: 'Task 1', fieldName: 'taskScore1', visible: true,
+  },
+  {
+    type: 'int', text: 'Task 2', fieldName: 'taskScore2', visible: true,
+  },
+  {
+    type: 'int', text: 'Task 3', fieldName: 'taskScore3', visible: true,
+  },
+  {
+    type: 'int', text: 'Total', fieldName: 'totalScore', visible: true,
+  },
+  {
+    type: 'bool', text: 'Active', fieldName: 'isActive', visible: true,
+  },
+  {
+    type: 'enum', text: 'Framework', fieldName: 'framework', visible: true,
+  },
+  {
+    type: 'date', text: 'Enrollment date', fieldName: 'date', visible: true,
+  },
+];
+
 const initialState = {
   isVirtualizeOn: true,
   filterCriteria: initialFilterCriteria,
   sortParameters: initialSortParams,
+  columnData: initialColumns,
   data: filledArr,
   filtratedData: initialFiltratedData,
   sortedAndFiltratedData: initialSortedAndFiltratedData,
