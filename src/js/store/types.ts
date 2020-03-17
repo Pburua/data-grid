@@ -94,18 +94,10 @@ class FilterCriteria {
   }
 }
 
-interface SortParameters {
-  [index: number]: {
-    sortCriteriaName: string;
-    isDirectionDown: boolean;
-    priority: number;
-  };
-
-  sort: any;
-  length: number;
-  map: any;
-
-  [Symbol.iterator]();
+interface SortParameter {
+  sortCriteriaName: string;
+  isDirectionDown: boolean;
+  priority: number;
 }
 
 interface ColumnData {
@@ -118,7 +110,7 @@ interface ColumnData {
 interface ReduxStorage {
   isVirtualizeOn: boolean;
   filterCriteria: FilterCriteria,
-  sortParameters: SortParameters,
+  sortParameters: SortParameter[],
   data: User[],
   filtratedData: User[],
   sortedAndFiltratedData: User[],
@@ -126,5 +118,5 @@ interface ReduxStorage {
 }
 
 export {
-  User, FilterCriteria, SortParameters, ReduxStorage, ColumnData
+  User, FilterCriteria, SortParameter, ReduxStorage, ColumnData,
 };

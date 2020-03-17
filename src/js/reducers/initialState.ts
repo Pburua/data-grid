@@ -3,7 +3,9 @@ import {
   filtrate,
   sortByCriteria,
 } from './utils';
-import { ColumnData, FilterCriteria, SortParameters, User } from '../store/types';
+import {
+  ColumnData, FilterCriteria, SortParameter, User,
+} from '../store/types';
 
 const ROW_NUMBER = 100;
 
@@ -23,7 +25,7 @@ const filledArr: User[] = new Array(ROW_NUMBER).fill(undefined).map((_value, ind
   );
 });
 
-const initialSortParams: SortParameters = [
+const initialSortParams: SortParameter[] = [
   {
     sortCriteriaName: 'name',
     isDirectionDown: true,

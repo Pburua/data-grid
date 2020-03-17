@@ -4,7 +4,7 @@ import {
   TOGGLE_VIRTUALIZATION,
   UPDATE_FILTERS,
 } from '../actions/actionTypes';
-import { ReduxStorage, SortParameters, User } from '../store/types';
+import { ReduxStorage, SortParameter, User } from '../store/types';
 import {
   filtrate,
   sortByCriteria,
@@ -82,7 +82,7 @@ function handleUpdateFilters(prevState: ReduxStorage, action) {
 function handleApplyFirstPriority(prevState: ReduxStorage, action) {
   const newData = clearSelection(prevState.data);
 
-  const updatedArr: SortParameters = prevState.sortParameters.map((value, index) => ({
+  const updatedArr: SortParameter[] = prevState.sortParameters.map((value, index) => ({
     ...value,
     isDirectionDown:
       (index === action.cellNumber ? !value.isDirectionDown : value.isDirectionDown),
@@ -109,7 +109,7 @@ function handleApplyAdditionalPriority(prevState: ReduxStorage, action) {
     if (currPriority > maxPriority && currPriority !== 10) maxPriority = currPriority;
   }
 
-  const updatedArr: SortParameters = prevState.sortParameters.map((value, index) => ({
+  const updatedArr: SortParameter[] = prevState.sortParameters.map((value, index) => ({
     ...value,
     isDirectionDown:
       (index === action.cellNumber ? !value.isDirectionDown : value.isDirectionDown),

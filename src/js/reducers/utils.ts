@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { FilterCriteria, SortParameters, User } from '../store/types';
+import { FilterCriteria, SortParameter, User } from '../store/types';
 
 function filtrate(data: User[], filterCriteria: FilterCriteria) {
   return data.filter((value: User) => {
@@ -54,8 +54,8 @@ function compareValues(a, b, isDirectionDown, sortCriteriaName) {
   return b.localeCompare(a);
 }
 
-function sortByCriteria(data: User[], sortParameters: SortParameters) {
-  const sortCriteriaArr: SortParameters = [...sortParameters];
+function sortByCriteria(data: User[], sortParameters: SortParameter[]) {
+  const sortCriteriaArr: SortParameter[] = [...sortParameters];
   sortCriteriaArr.sort((a, b) => {
     if (a.priority > b.priority) {
       return 1;
