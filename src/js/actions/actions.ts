@@ -30,18 +30,18 @@ export function updateFilters(newFilter) {
   store.dispatch(action);
 }
 
-export function applyFirstPriority(cellNumber) {
+export function applyFirstPriority(columnId) {
   const action = {
     type: APPLY_FIRST_PRIORITY,
-    cellNumber,
+    columnId,
   };
   store.dispatch(action);
 }
 
-export function applyAdditionalPriority(cellNumber) {
+export function applyAdditionalPriority(columnId) {
   const action = {
     type: APPLY_ADDITIONAL_PRIORITY,
-    cellNumber,
+    columnId,
   };
   store.dispatch(action);
 }

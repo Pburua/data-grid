@@ -28,46 +28,55 @@ if (loadedItem) initialSortParams = JSON.parse(loadedItem);
 else {
   initialSortParams = [
     {
+      columnId: 'name',
       sortCriteriaName: 'name',
       isDirectionDown: true,
       priority: 1,
     },
     {
+      columnId: 'city',
       sortCriteriaName: 'city',
       isDirectionDown: true,
       priority: 10,
     },
     {
+      columnId: 'taskScore1',
       sortCriteriaName: 'unconvertedTaskScore1',
       isDirectionDown: true,
       priority: 10,
     },
     {
+      columnId: 'taskScore2',
       sortCriteriaName: 'unconvertedTaskScore2',
       isDirectionDown: true,
       priority: 10,
     },
     {
+      columnId: 'taskScore3',
       sortCriteriaName: 'unconvertedTaskScore3',
       isDirectionDown: true,
       priority: 10,
     },
     {
+      columnId: 'totalScore',
       sortCriteriaName: 'unconvertedTotalScore',
       isDirectionDown: true,
       priority: 10,
     },
     {
+      columnId: 'isActive',
       sortCriteriaName: 'isActive',
       isDirectionDown: true,
       priority: 10,
     },
     {
+      columnId: 'framework',
       sortCriteriaName: 'framework',
       isDirectionDown: true,
       priority: 10,
     },
     {
+      columnId: 'date',
       sortCriteriaName: 'unconvertedDate',
       isDirectionDown: true,
       priority: 10,

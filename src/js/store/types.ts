@@ -89,6 +89,7 @@ interface FilterCriteria {
 }
 
 interface SortParameter {
+  columnId: string;
   sortCriteriaName: string;
   isDirectionDown: boolean;
   priority: number;

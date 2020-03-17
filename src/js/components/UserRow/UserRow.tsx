@@ -17,10 +17,10 @@ const UserRow = ({
   if (index === 0) {
     return (
       <TableRow className="table__row table-head" key={0} component="div">
-        {visibleColumns.map((value, colIndex) => (
+        {visibleColumns.map((value) => (
           <TableHeadItem
             key={value.fieldName}
-            columnIndex={colIndex}
+            columnId={value.fieldName}
             type={value.type}
             text={value.text}
           />

@@ -82,12 +82,15 @@ function handleUpdateFilters(prevState: ReduxStorage, action) {
 function handleApplyFirstPriority(prevState: ReduxStorage, action) {
   const newData = clearSelection(prevState.data);
 
-  const updatedArr: SortParameter[] = prevState.sortParameters.map((value, index) => ({
+  // найти в prevState.sortParameters такой элемент,
+  // что action.columnId = prevState.sortParameters[i].columnId
+
+  const updatedArr: SortParameter[] = prevState.sortParameters.map((value) => ({
     ...value,
     isDirectionDown:
-      (index === action.cellNumber ? !value.isDirectionDown : value.isDirectionDown),
+      (value.columnId === action.columnId ? !value.isDirectionDown : value.isDirectionDown),
     priority:
-      (index === action.cellNumber ? 1 : 10),
+      (value.columnId === action.columnId ? 1 : 10),
   }));
 
   const filtratedData = filtrate(newData, prevState.filterCriteria);
@@ -109,12 +112,16 @@ function handleApplyAdditionalPriority(prevState: ReduxStorage, action) {
     if (currPriority > maxPriority && currPriority !== 10) maxPriority = currPriority;
   }
 
-  const updatedArr: SortParameter[] = prevState.sortParameters.map((value, index) => ({
+  // найти в prevState.sortParameters такой элемент,
+  // что action.columnId = prevState.sortParameters[i].columnId
+
+  const updatedArr: SortParameter[] = prevState.sortParameters.map((value) => ({
     ...value,
     isDirectionDown:
-      (index === action.cellNumber ? !value.isDirectionDown : value.isDirectionDown),
+      (value.columnId === action.columnId ? !value.isDirectionDown : value.isDirectionDown),
     priority:
-      (index === action.cellNumber && value.priority === 10 ? maxPriority + 1 : value.priority),
+      (value.columnId === action.columnId && value.priority === 10
+        ? maxPriority + 1 : value.priority),
   }));
 
   const newData = clearSelection(prevState.data);

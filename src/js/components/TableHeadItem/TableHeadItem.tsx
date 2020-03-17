@@ -7,15 +7,15 @@ import { connect } from 'react-redux';
 import { applyAdditionalPriority, applyFirstPriority } from '../../actions/actions';
 
 const TableHeadItem = ({
-  type, text, columnIndex, allSortParameters,
+  type, text, columnId, allSortParameters,
 }: any) => {
-  const sortParams = allSortParameters[columnIndex];
+  const sortParams = allSortParameters.filter((value) => value.columnId === columnId);
 
   function handleTableHeadCellClick(event) {
     if (event.shiftKey) {
-      applyAdditionalPriority(columnIndex);
+      applyAdditionalPriority(columnId);
     } else {
-      applyFirstPriority(columnIndex);
+      applyFirstPriority(columnId);
     }
   }
 
@@ -26,12 +26,12 @@ const TableHeadItem = ({
       </div>
       <div className="table-head__sort-controls sort-controls">
         <div className="sort-controls__icon">
-          {!sortParams.isDirectionDown
+          {!sortParams[0].isDirectionDown
             ? <ArrowDropUpIcon fontSize="small" />
             : <ArrowDropDownIcon fontSize="small" /> }
         </div>
         <div className="sort-controls__priority">
-          {sortParams.priority === 10 ? '' : sortParams.priority}
+          {sortParams[0].priority === 10 ? '' : sortParams[0].priority}
         </div>
       </div>
     </TableCell>
