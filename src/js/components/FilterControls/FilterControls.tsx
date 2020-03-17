@@ -168,7 +168,9 @@ const FilterControls = ({ filterCriteria, columnData }: FilterControlsProps) => 
             id="visible-columns-select"
             className="filter-controls__multiple-checkbox"
             multiple
-            value={columnData.map((item: ColumnData) => (item.fieldName))}
+            value={[...columnData]
+              .filter((item: ColumnData) => item.visible)
+              .map((item: ColumnData) => (item.fieldName))}
             input={<Input />}
             MenuProps={MenuProps}
             renderValue={(selected: any) => selected.join(', ')}

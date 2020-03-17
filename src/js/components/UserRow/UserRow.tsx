@@ -12,10 +12,12 @@ import { removeUserSelection } from '../../reducers/utils';
 const UserRow = ({
   index, style, columnData, sortedAndFiltratedData,
 }: any) => {
+  const visibleColumns = [...columnData].filter((value) => value.visible);
+
   if (index === 0) {
     return (
       <TableRow className="table__row table-head" key={0} component="div">
-        {columnData.map((value, colIndex) => (
+        {visibleColumns.map((value, colIndex) => (
           <TableHeadItem
             key={value.fieldName}
             columnIndex={colIndex}
@@ -48,7 +50,7 @@ const UserRow = ({
 
   return (
     <TableRow className={rowClassName} key={index} onClick={handleTableRowClick} component="div" style={style}>
-      {columnData.map((value) => (
+      {visibleColumns.map((value) => (
         <TableCell
           className={`table__cell ${value.type}`}
           key={value.fieldName}
