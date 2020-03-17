@@ -3,9 +3,35 @@ import { connect } from 'react-redux';
 import { Button, Switch } from '@material-ui/core';
 import { deleteSelectedRows, toggleVirtualization } from '../../actions/actions';
 import './BottomPanel.scss';
+import store from '../../store/store';
+import { User } from '../../store/types';
 
 const BottomPanel = (props: any) => {
   const { isVirtualizeOn } = props;
+
+  function exportToCsv() {
+    const data = store.getState().sortedAndFiltratedData;
+
+    const csvData = data.map((user: User) => (
+      `${user.name},${user.city},${user.unconvertedTaskScore1},${user.unconvertedTaskScore1
+      },${user.unconvertedTaskScore1},${user.unconvertedTotalScore},${user.isActive
+      },${user.framework},${user.date}`
+    ));
+
+    const csvHeader = 'name,city,taskScore1,taskScore2,taskScore3,totalScore,isActive,framework,enrollmentDate\n';
+
+    const csvContent = `data:text/csv;charset=utf-8,${csvHeader}${csvData.join('\n')}`;
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', 'user_data.csv');
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(() => {
+      document.body.removeChild(link);
+    }, 0);
+  }
 
   return (
     <>
@@ -33,7 +59,7 @@ const BottomPanel = (props: any) => {
           </Button>
         </div>
         <div className="bottom-panel__column">
-          <Button variant="contained" color="default">
+          <Button onClick={exportToCsv} variant="contained" color="default">
             Export table to .csv
           </Button>
         </div>
