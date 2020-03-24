@@ -7,7 +7,7 @@ import {
 import { ReduxStorage, SortParameter, User } from '../store/types';
 import {
   filtrate,
-  sortByCriteria,
+  sortByCriteria, sortByCriteriaRef,
 } from './utils';
 // eslint-disable-next-line import/named
 import { initialState } from './initialState';
@@ -62,6 +62,7 @@ function handleToggleRowSelection(prevState: ReduxStorage, action) {
     data: newData,
     filtratedData,
     sortedAndFiltratedData: sortByCriteria(filtratedData, prevState.sortParameters),
+    sortedAndFiltratedDataRef: sortByCriteriaRef(filtratedData, prevState.sortParameters),
   };
 }
 
@@ -76,6 +77,7 @@ function handleUpdateFilters(prevState: ReduxStorage, action) {
     data: newData,
     filtratedData,
     sortedAndFiltratedData: sortByCriteria(filtratedData, prevState.sortParameters),
+    sortedAndFiltratedDataRef: sortByCriteriaRef(filtratedData, prevState.sortParameters),
   };
 }
 
@@ -101,6 +103,7 @@ function handleApplyFirstPriority(prevState: ReduxStorage, action) {
     filtratedData,
     sortParameters: updatedArr,
     sortedAndFiltratedData: sortByCriteria(prevState.filtratedData, updatedArr),
+    sortedAndFiltratedDataRef: sortByCriteriaRef(prevState.filtratedData, updatedArr),
   };
 }
 
@@ -134,6 +137,7 @@ function handleApplyAdditionalPriority(prevState: ReduxStorage, action) {
     filtratedData,
     sortParameters: updatedArr,
     sortedAndFiltratedData: sortByCriteria(prevState.filtratedData, updatedArr),
+    sortedAndFiltratedDataRef: sortByCriteriaRef(prevState.filtratedData, updatedArr),
   };
 }
 
@@ -147,6 +151,7 @@ function handleDeleteSelectedRows(prevState: ReduxStorage) {
     data: newData,
     filtratedData,
     sortedAndFiltratedData: sortByCriteria(filtratedData, prevState.sortParameters),
+    sortedAndFiltratedDataRef: sortByCriteriaRef(filtratedData, prevState.sortParameters),
   };
 }
 

@@ -4,7 +4,7 @@ import { Button, Switch } from '@material-ui/core';
 import { deleteSelectedRows, toggleVirtualization } from '../../actions/actions';
 import './BottomPanel.scss';
 import store from '../../store/store';
-import { ColumnData, User } from '../../store/types';
+import { ColumnData, User, UserReference } from '../../store/types';
 
 const BottomPanel = (props: any) => {
   const { isVirtualizeOn } = props;
@@ -19,11 +19,12 @@ const BottomPanel = (props: any) => {
 
     csvHeader += '\n';
 
-    const data = store.getState().sortedAndFiltratedData;
+    const { filtratedData, sortedAndFiltratedDataRef } = store.getState();
     const visibleColumns = visibleColumnData.map((item: ColumnData) => (item.fieldName));
 
-    const csvData = data.map((user: User) => {
+    const csvData = sortedAndFiltratedDataRef.map((userRef: UserReference) => {
       let rowStr = '';
+      const user: User = filtratedData[userRef.userIndex];
       for (let i = 0; i < visibleColumns.length; i += 1) {
         rowStr += user[visibleColumns[i]];
         rowStr += ',';

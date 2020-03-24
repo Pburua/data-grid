@@ -6,13 +6,23 @@ import TableRow from '@material-ui/core/TableRow';
 import TableHeadItem from '../TableHeadItem/TableHeadItem';
 import './UserRow.scss';
 import { toggleRowSelection } from '../../actions/actions';
-import { ReduxStorage, User } from '../../store/types';
+import {
+  ColumnData, ReduxStorage, User, UserReference,
+} from '../../store/types';
 import { removeUserSelection } from '../../reducers/utils';
 
+interface UserRowProps {
+  index: number,
+  style: any,
+  columnData: ColumnData[],
+  filtratedData: User[],
+  sortedAndFiltratedDataRef: UserReference[],
+}
+
 const UserRow = ({
-  index, style, columnData, sortedAndFiltratedData,
-}: any) => {
-  const visibleColumns = [...columnData].filter((value) => value.visible);
+  index, style, columnData, filtratedData, sortedAndFiltratedDataRef,
+}: UserRowProps) => {
+  const visibleColumns = [...columnData].filter((value: ColumnData) => value.visible);
 
   if (index === 0) {
     return (
@@ -31,7 +41,7 @@ const UserRow = ({
 
   faker.seed(index + 1);
 
-  const user: User = sortedAndFiltratedData[index - 1];
+  const user: User = filtratedData[sortedAndFiltratedDataRef[index - 1].userIndex];
 
   const { isSelected } = user;
 
@@ -50,7 +60,7 @@ const UserRow = ({
 
   return (
     <TableRow className={rowClassName} key={index} onClick={handleTableRowClick} component="div" style={style}>
-      {visibleColumns.map((value) => (
+      {visibleColumns.map((value: ColumnData) => (
         <TableCell
           className={`table__cell ${value.type}`}
           key={value.fieldName}
@@ -64,7 +74,8 @@ const UserRow = ({
 };
 
 const mapStateToProps = (state: ReduxStorage) => ({
-  sortedAndFiltratedData: state.sortedAndFiltratedData,
+  filtratedData: state.filtratedData,
+  sortedAndFiltratedDataRef: state.sortedAndFiltratedDataRef,
   columnData: state.columnData,
 });
 

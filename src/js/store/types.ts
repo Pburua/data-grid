@@ -80,6 +80,11 @@ class User {
   }
 }
 
+interface UserReference {
+  userId: string,
+  userIndex: number,
+}
+
 interface FilterCriteria {
   searchText: string;
 
@@ -109,9 +114,10 @@ interface ReduxStorage {
   data: User[],
   filtratedData: User[],
   sortedAndFiltratedData: User[],
+  sortedAndFiltratedDataRef: UserReference[],
   columnData: ColumnData[], // local storage
 }
 
 export {
-  User, FilterCriteria, SortParameter, ReduxStorage, ColumnData,
+  User, FilterCriteria, SortParameter, ReduxStorage, ColumnData, UserReference,
 };

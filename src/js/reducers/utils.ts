@@ -84,6 +84,39 @@ function sortByCriteria(data: User[], sortParameters: SortParameter[]) {
   });
 }
 
+function sortByCriteriaRef(data: User[], sortParameters: SortParameter[]) {
+  const sortCriteriaArr: SortParameter[] = [...sortParameters];
+  sortCriteriaArr.sort((a, b) => {
+    if (a.priority > b.priority) {
+      return 1;
+    }
+    if (a.priority < b.priority) {
+      return -1;
+    }
+    return 0;
+  });
+
+  const dataRef = data.map((value, index) => ({
+    userId: value.name,
+    userIndex: index,
+  }));
+
+  return dataRef.sort((a, b) => {
+    for (let i = 0; i < sortCriteriaArr.length; i += 1) {
+      const compareResult = compareValues(
+        data[a.userIndex][sortCriteriaArr[i].sortCriteriaName],
+        data[b.userIndex][sortCriteriaArr[i].sortCriteriaName],
+        sortCriteriaArr[i].isDirectionDown,
+        sortCriteriaArr[i].sortCriteriaName,
+      );
+      if (compareResult !== 0) {
+        return compareResult;
+      }
+    }
+    return 0;
+  });
+}
+
 function removeUserSelection() {
   const s = window.getSelection();
   if (s && s.rangeCount > 0) {
@@ -96,5 +129,6 @@ function removeUserSelection() {
 export {
   filtrate,
   sortByCriteria,
+  sortByCriteriaRef,
   removeUserSelection,
 };

@@ -45,7 +45,7 @@ function VirtualizedListWrapper(length) {
 }
 
 const UserTable = (props: any) => {
-  const { isVirtualizeOn, sortedAndFiltratedData } = props;
+  const { isVirtualizeOn, sortedAndFiltratedDataRef } = props;
 
 
   return (
@@ -54,8 +54,8 @@ const UserTable = (props: any) => {
 
         <TableBody className="table__body" component="div">
           {isVirtualizeOn
-            ? VirtualizedListWrapper(sortedAndFiltratedData.length + 1)
-            : UnVirtualizedList(UserRow, sortedAndFiltratedData.length + 1)}
+            ? VirtualizedListWrapper(sortedAndFiltratedDataRef.length + 1)
+            : UnVirtualizedList(UserRow, sortedAndFiltratedDataRef.length + 1)}
         </TableBody>
 
       </Table>
@@ -65,7 +65,7 @@ const UserTable = (props: any) => {
 
 const mapStateToProps = (state: any) => ({
   isVirtualizeOn: state.isVirtualizeOn,
-  sortedAndFiltratedData: state.sortedAndFiltratedData,
+  sortedAndFiltratedDataRef: state.sortedAndFiltratedDataRef,
 });
 
 export default connect(mapStateToProps)(UserTable);
