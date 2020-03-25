@@ -19,12 +19,12 @@ const BottomPanel = (props: any) => {
 
     csvHeader += '\n';
 
-    const { filtratedData, sortedAndFiltratedDataRef } = store.getState();
+    const { data, sortedAndFiltratedDataRef } = store.getState();
     const visibleColumns = visibleColumnData.map((item: ColumnData) => (item.fieldName));
 
     const csvData = sortedAndFiltratedDataRef.map((userRef: UserReference) => {
       let rowStr = '';
-      const user: User = filtratedData[userRef.userIndex];
+      const user: User = data[userRef.userIndex];
       for (let i = 0; i < visibleColumns.length; i += 1) {
         rowStr += user[visibleColumns[i]];
         rowStr += ',';

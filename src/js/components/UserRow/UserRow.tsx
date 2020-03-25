@@ -15,12 +15,12 @@ interface UserRowProps {
   index: number,
   style: any,
   columnData: ColumnData[],
-  filtratedData: User[],
+  data: User[],
   sortedAndFiltratedDataRef: UserReference[],
 }
 
 const UserRow = ({
-  index, style, columnData, filtratedData, sortedAndFiltratedDataRef,
+  index, style, columnData, data, sortedAndFiltratedDataRef,
 }: UserRowProps) => {
   const visibleColumns = [...columnData].filter((value: ColumnData) => value.visible);
 
@@ -41,7 +41,7 @@ const UserRow = ({
 
   faker.seed(index + 1);
 
-  const user: User = filtratedData[sortedAndFiltratedDataRef[index - 1].userIndex];
+  const user: User = data[sortedAndFiltratedDataRef[index - 1].userIndex];
 
   const { isSelected } = user;
 
@@ -74,7 +74,7 @@ const UserRow = ({
 };
 
 const mapStateToProps = (state: ReduxStorage) => ({
-  filtratedData: state.filtratedData,
+  data: state.data,
   sortedAndFiltratedDataRef: state.sortedAndFiltratedDataRef,
   columnData: state.columnData,
 });

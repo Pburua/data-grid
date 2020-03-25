@@ -81,7 +81,6 @@ class User {
 }
 
 interface UserReference {
-  userId: string,
   userIndex: number,
 }
 
@@ -112,8 +111,7 @@ interface ReduxStorage {
   filterCriteria: FilterCriteria, // local storage
   sortParameters: SortParameter[], // local storage
   data: User[],
-  filtratedData: User[],
-  sortedAndFiltratedData: User[],
+  filtratedDataRef: UserReference[],
   sortedAndFiltratedDataRef: UserReference[],
   columnData: ColumnData[], // local storage
 }

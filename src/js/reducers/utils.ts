@@ -1,27 +1,7 @@
 import moment from 'moment';
-import { FilterCriteria, SortParameter, User } from '../store/types';
-
-function filtrate(data: User[], filterCriteria: FilterCriteria) {
-  return data.filter((value: User) => {
-    if (filterCriteria.searchText !== ''
-      && !value.name.includes(filterCriteria.searchText)
-      && !value.city.includes(filterCriteria.searchText)
-      && !value.taskScore1.includes(filterCriteria.searchText)
-      && !value.taskScore2.includes(filterCriteria.searchText)
-      && !value.taskScore3.includes(filterCriteria.searchText)
-      && !value.totalScore.includes(filterCriteria.searchText)
-      && !value.date.includes(filterCriteria.searchText)
-    ) return false;
-
-    if (filterCriteria.isActive !== 'all'
-      && filterCriteria.isActive !== value.isActive
-    ) return false;
-
-    if (!filterCriteria.frameworks.includes(value.framework)) return false;
-
-    return true;
-  });
-}
+import {
+  FilterCriteria, SortParameter, User, UserReference,
+} from '../store/types';
 
 function compareNumbers(a: number, b: number) {
   if (a > b) return 1;
@@ -54,54 +34,49 @@ function compareValues(a, b, isDirectionDown, sortCriteriaName) {
   return b.localeCompare(a);
 }
 
-function sortByCriteria(data: User[], sortParameters: SortParameter[]) {
-  const sortCriteriaArr: SortParameter[] = [...sortParameters];
-  sortCriteriaArr.sort((a, b) => {
-    if (a.priority > b.priority) {
-      return 1;
-    }
-    if (a.priority < b.priority) {
-      return -1;
-    }
-    return 0;
-  });
-
-  const dataCopy = [...data];
-
-  return dataCopy.sort((a, b) => {
-    for (let i = 0; i < sortCriteriaArr.length; i += 1) {
-      const compareResult = compareValues(
-        a[sortCriteriaArr[i].sortCriteriaName],
-        b[sortCriteriaArr[i].sortCriteriaName],
-        sortCriteriaArr[i].isDirectionDown,
-        sortCriteriaArr[i].sortCriteriaName,
-      );
-      if (compareResult !== 0) {
-        return compareResult;
-      }
-    }
-    return 0;
-  });
-}
-
-function sortByCriteriaRef(data: User[], sortParameters: SortParameter[]) {
-  const sortCriteriaArr: SortParameter[] = [...sortParameters];
-  sortCriteriaArr.sort((a, b) => {
-    if (a.priority > b.priority) {
-      return 1;
-    }
-    if (a.priority < b.priority) {
-      return -1;
-    }
-    return 0;
-  });
-
-  const dataRef = data.map((value, index) => ({
-    userId: value.name,
+function filtrateRef(data: User[], filterCriteria: FilterCriteria) {
+  const dataRef = data.map((_value, index) => ({
     userIndex: index,
   }));
 
-  return dataRef.sort((a, b) => {
+  return dataRef.filter((value: UserReference) => {
+    const curRow: User = data[value.userIndex];
+
+    if (filterCriteria.searchText !== ''
+      && !curRow.name.includes(filterCriteria.searchText)
+      && !curRow.city.includes(filterCriteria.searchText)
+      && !curRow.taskScore1.includes(filterCriteria.searchText)
+      && !curRow.taskScore2.includes(filterCriteria.searchText)
+      && !curRow.taskScore3.includes(filterCriteria.searchText)
+      && !curRow.totalScore.includes(filterCriteria.searchText)
+      && !curRow.date.includes(filterCriteria.searchText)
+    ) return false;
+
+    if (filterCriteria.isActive !== 'all'
+      && filterCriteria.isActive !== curRow.isActive
+    ) return false;
+
+    if (!filterCriteria.frameworks.includes(curRow.framework)) return false;
+
+    return true;
+  });
+}
+
+function sortFilteredRef(data: User[], dataRef: UserReference[], sortParameters: SortParameter[]) {
+  const sortCriteriaArr: SortParameter[] = [...sortParameters];
+  sortCriteriaArr.sort((a, b) => {
+    if (a.priority > b.priority) {
+      return 1;
+    }
+    if (a.priority < b.priority) {
+      return -1;
+    }
+    return 0;
+  });
+
+  const dataRefCopy = [...dataRef];
+
+  return dataRefCopy.sort((a, b) => {
     for (let i = 0; i < sortCriteriaArr.length; i += 1) {
       const compareResult = compareValues(
         data[a.userIndex][sortCriteriaArr[i].sortCriteriaName],
@@ -127,8 +102,7 @@ function removeUserSelection() {
 }
 
 export {
-  filtrate,
-  sortByCriteria,
-  sortByCriteriaRef,
+  filtrateRef,
+  sortFilteredRef,
   removeUserSelection,
 };

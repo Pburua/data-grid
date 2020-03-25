@@ -1,10 +1,9 @@
 import faker from 'faker';
 import {
-  filtrate,
-  sortByCriteria, sortByCriteriaRef,
+  filtrateRef, sortFilteredRef,
 } from './utils';
 import {
-  ColumnData, FilterCriteria, ReduxStorage, SortParameter, User,
+  ColumnData, FilterCriteria, ReduxStorage, SortParameter, User, UserReference,
 } from '../store/types';
 
 const ROW_NUMBER = 1000;
@@ -136,14 +135,13 @@ const initialData: User[] = new Array(ROW_NUMBER).fill(undefined).map((_value, i
   );
 });
 
-const initialFiltratedData: User[] = filtrate([...initialData], initialFilterCriteria);
+const initialFiltratedDataRef: UserReference[] = filtrateRef(
+  initialData, initialFilterCriteria,
+);
 
-const initialSortedAndFiltratedData: User[] = sortByCriteria([...initialFiltratedData],
-  initialSortParams);
-
-const initialSortedAndFiltratedDataRef = sortByCriteriaRef([...initialFiltratedData],
-  initialSortParams);
-
+const initialSortedAndFiltratedDataRef: UserReference[] = sortFilteredRef(
+  initialData, initialFiltratedDataRef, initialSortParams,
+);
 
 const initialState: ReduxStorage = {
   isVirtualizeOn: true,
@@ -151,8 +149,7 @@ const initialState: ReduxStorage = {
   sortParameters: initialSortParams,
   columnData: initialColumns,
   data: initialData,
-  filtratedData: initialFiltratedData,
-  sortedAndFiltratedData: initialSortedAndFiltratedData,
+  filtratedDataRef: initialFiltratedDataRef,
   sortedAndFiltratedDataRef: initialSortedAndFiltratedDataRef,
 };
 

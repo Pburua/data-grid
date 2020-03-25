@@ -6,8 +6,7 @@ import {
 } from '../actions/actionTypes';
 import { ReduxStorage, SortParameter, User } from '../store/types';
 import {
-  filtrate,
-  sortByCriteria, sortByCriteriaRef,
+  filtrateRef, sortFilteredRef,
 } from './utils';
 // eslint-disable-next-line import/named
 import { initialState } from './initialState';
@@ -55,29 +54,27 @@ function handleToggleRowSelection(prevState: ReduxStorage, action) {
     }
   }
 
-  const filtratedData = filtrate(newData, prevState.filterCriteria);
+  const filtratedDataRef = filtrateRef(newData, prevState.filterCriteria);
 
   return {
     ...prevState,
     data: newData,
-    filtratedData,
-    sortedAndFiltratedData: sortByCriteria(filtratedData, prevState.sortParameters),
-    sortedAndFiltratedDataRef: sortByCriteriaRef(filtratedData, prevState.sortParameters),
+    filtratedDataRef,
+    sortedAndFiltratedDataRef: sortFilteredRef(newData, filtratedDataRef, prevState.sortParameters),
   };
 }
 
 function handleUpdateFilters(prevState: ReduxStorage, action) {
   const newData = clearSelection(prevState.data);
 
-  const filtratedData = filtrate(newData, action.filterCriteria);
+  const filtratedDataRef = filtrateRef(newData, action.filterCriteria);
 
   return {
     ...prevState,
     filterCriteria: action.filterCriteria,
     data: newData,
-    filtratedData,
-    sortedAndFiltratedData: sortByCriteria(filtratedData, prevState.sortParameters),
-    sortedAndFiltratedDataRef: sortByCriteriaRef(filtratedData, prevState.sortParameters),
+    filtratedDataRef,
+    sortedAndFiltratedDataRef: sortFilteredRef(newData, filtratedDataRef, prevState.sortParameters),
   };
 }
 
@@ -95,15 +92,14 @@ function handleApplyFirstPriority(prevState: ReduxStorage, action) {
       (value.columnId === action.columnId ? 1 : 10),
   }));
 
-  const filtratedData = filtrate(newData, prevState.filterCriteria);
+  const filtratedDataRef = filtrateRef(newData, prevState.filterCriteria);
 
   return {
     ...prevState,
     data: newData,
-    filtratedData,
+    filtratedDataRef,
     sortParameters: updatedArr,
-    sortedAndFiltratedData: sortByCriteria(prevState.filtratedData, updatedArr),
-    sortedAndFiltratedDataRef: sortByCriteriaRef(prevState.filtratedData, updatedArr),
+    sortedAndFiltratedDataRef: sortFilteredRef(newData, prevState.filtratedDataRef, updatedArr),
   };
 }
 
@@ -129,29 +125,27 @@ function handleApplyAdditionalPriority(prevState: ReduxStorage, action) {
 
   const newData = clearSelection(prevState.data);
 
-  const filtratedData = filtrate(newData, prevState.filterCriteria);
+  const filtratedDataRef = filtrateRef(newData, prevState.filterCriteria);
 
   return {
     ...prevState,
     data: newData,
-    filtratedData,
+    filtratedDataRef,
     sortParameters: updatedArr,
-    sortedAndFiltratedData: sortByCriteria(prevState.filtratedData, updatedArr),
-    sortedAndFiltratedDataRef: sortByCriteriaRef(prevState.filtratedData, updatedArr),
+    sortedAndFiltratedDataRef: sortFilteredRef(newData, prevState.filtratedDataRef, updatedArr),
   };
 }
 
 function handleDeleteSelectedRows(prevState: ReduxStorage) {
   const newData = prevState.data.filter((value) => !value.isSelected);
 
-  const filtratedData = filtrate(newData, prevState.filterCriteria);
+  const filtratedDataRef = filtrateRef(newData, prevState.filterCriteria);
 
   return {
     ...prevState,
     data: newData,
-    filtratedData,
-    sortedAndFiltratedData: sortByCriteria(filtratedData, prevState.sortParameters),
-    sortedAndFiltratedDataRef: sortByCriteriaRef(filtratedData, prevState.sortParameters),
+    filtratedDataRef,
+    sortedAndFiltratedDataRef: sortFilteredRef(newData, filtratedDataRef, prevState.sortParameters),
   };
 }
 
