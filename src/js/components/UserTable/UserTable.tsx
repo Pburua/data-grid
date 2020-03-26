@@ -15,7 +15,7 @@ function UnVirtualizedList(Row, itemCount) {
   const rows: JSX.Element [] = [];
 
   for (let i = 0; i < itemCount; i += 1) {
-    faker.seed(i + 2);
+    faker.seed(i);
     rows.push(<Row key={faker.name.findName()} index={i} />);
   }
 
@@ -27,6 +27,7 @@ function UnVirtualizedList(Row, itemCount) {
 }
 
 function VirtualizedListWrapper(length) {
+  const defaultRowHeight = 53;
   return (
     <AutoSizer>
       {({ height, width }) => (
@@ -34,7 +35,7 @@ function VirtualizedListWrapper(length) {
           height={height}
           width={width}
           itemCount={length}
-          itemSize={53}
+          itemSize={defaultRowHeight}
           autoRefresh={{}}
         >
           {UserRow}
@@ -48,8 +49,9 @@ const UserTable = () => {
   const isVirtualizeOn: boolean = useSelector(
     (state: ReduxStorage) => state.isVirtualizeOn,
   );
+  // displayingDataLength is increased by 1 to render a header as a virtualized row
   const displayingDataLength: number = useSelector(
-    (state: ReduxStorage) => state.sortedAndFiltratedDataRef.length,
+    (state: ReduxStorage) => state.sortedAndFiltratedDataRef.length + 1,
   );
 
   return (
@@ -58,8 +60,8 @@ const UserTable = () => {
 
         <TableBody className="table__body" component="div">
           {isVirtualizeOn
-            ? VirtualizedListWrapper(displayingDataLength + 1)
-            : UnVirtualizedList(UserRow, displayingDataLength + 1)}
+            ? VirtualizedListWrapper(displayingDataLength)
+            : UnVirtualizedList(UserRow, displayingDataLength)}
         </TableBody>
 
       </Table>

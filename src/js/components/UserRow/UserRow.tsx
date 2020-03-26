@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import faker from 'faker';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import TableHeadItem from '../TableHeadItem/TableHeadItem';
@@ -42,8 +41,7 @@ const UserRow = ({ index, style }: UserRowProps) => {
     );
   }
 
-  faker.seed(index + 1);
-
+  // index is decreased by 1 to render a header as a virtualized row
   const user: User = data[sortedAndFiltratedDataRef[index - 1].userIndex];
 
   const { isSelected } = user;
