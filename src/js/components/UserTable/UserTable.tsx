@@ -6,10 +6,10 @@ import TableContainer from '@material-ui/core/TableContainer';
 import Paper from '@material-ui/core/Paper';
 import { FixedSizeList as VirtualizedList } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
-import { connect } from 'react-redux';
-
 import './UserTable.scss';
+import { useSelector } from 'react-redux';
 import UserRow from '../UserRow/UserRow';
+import { ReduxStorage } from '../../store/types';
 
 function UnVirtualizedList(Row, itemCount) {
   const rows: JSX.Element [] = [];
@@ -44,9 +44,13 @@ function VirtualizedListWrapper(length) {
   );
 }
 
-const UserTable = (props: any) => {
-  const { isVirtualizeOn, sortedAndFiltratedDataRef } = props;
-
+const UserTable = () => {
+  const isVirtualizeOn: boolean = useSelector(
+    (state: ReduxStorage) => state.isVirtualizeOn,
+  );
+  const displayingDataLength: number = useSelector(
+    (state: ReduxStorage) => state.sortedAndFiltratedDataRef.length,
+  );
 
   return (
     <TableContainer className="table-container" component={Paper}>
@@ -54,8 +58,8 @@ const UserTable = (props: any) => {
 
         <TableBody className="table__body" component="div">
           {isVirtualizeOn
-            ? VirtualizedListWrapper(sortedAndFiltratedDataRef.length + 1)
-            : UnVirtualizedList(UserRow, sortedAndFiltratedDataRef.length + 1)}
+            ? VirtualizedListWrapper(displayingDataLength + 1)
+            : UnVirtualizedList(UserRow, displayingDataLength + 1)}
         </TableBody>
 
       </Table>
@@ -63,9 +67,4 @@ const UserTable = (props: any) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  isVirtualizeOn: state.isVirtualizeOn,
-  sortedAndFiltratedDataRef: state.sortedAndFiltratedDataRef,
-});
-
-export default connect(mapStateToProps)(UserTable);
+export default UserTable;

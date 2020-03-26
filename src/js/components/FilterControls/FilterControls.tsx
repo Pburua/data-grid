@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
   Checkbox,
   Container,
@@ -56,13 +56,16 @@ const MenuProps = {
   },
 };
 
-interface FilterControlsProps {
-  filterCriteria: FilterCriteria;
-  columnData: ColumnData[];
-}
-
-const FilterControls = ({ filterCriteria, columnData }: FilterControlsProps) => {
+const FilterControls = () => {
   const [searchText, setSearchText] = useState('');
+
+  const filterCriteria: FilterCriteria = useSelector(
+    (state: ReduxStorage) => state.filterCriteria,
+  );
+
+  const columnData: ColumnData[] = useSelector(
+    (state: ReduxStorage) => state.columnData,
+  );
 
   useEffect(() => {
     setSearchText(filterCriteria.searchText);
@@ -194,9 +197,4 @@ const FilterControls = ({ filterCriteria, columnData }: FilterControlsProps) => 
   );
 };
 
-const mapStateToProps = (state: ReduxStorage) => ({
-  filterCriteria: state.filterCriteria,
-  columnData: state.columnData,
-});
-
-export default connect(mapStateToProps)(FilterControls);
+export default FilterControls;

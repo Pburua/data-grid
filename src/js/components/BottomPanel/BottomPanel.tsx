@@ -1,39 +1,64 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Button, Switch } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { createSelector } from 'reselect';
+import {
+  Button, MuiThemeProvider, Switch, Tooltip,
+} from '@material-ui/core';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { deleteSelectedRows, toggleVirtualization } from '../../actions/actions';
 import './BottomPanel.scss';
-import store from '../../store/store';
-import { ColumnData, User, UserReference } from '../../store/types';
+import {
+  ColumnData, ReduxStorage, User, UserReference,
+} from '../../store/types';
 
-const BottomPanel = (props: any) => {
-  const { isVirtualizeOn } = props;
+const theme = createMuiTheme({
+  overrides: {
+    MuiTooltip: {
+      tooltip: {
+        fontSize: '1.5em',
+      },
+    },
+  },
+});
 
-  function exportToCsv() {
-    const columnData: ColumnData[] = [...store.getState().columnData];
-    const visibleColumnData: ColumnData[] = columnData.filter((item: ColumnData) => item.visible);
-
+const selectCsvText = createSelector(
+  (state: ReduxStorage) => state.columnData.filter((item: ColumnData) => item.visible),
+  (state: ReduxStorage) => state.data,
+  (state: ReduxStorage) => state.sortedAndFiltratedDataRef,
+  (visibleColumnData: ColumnData[], data: User[], sortedAndFiltratedDataRef: UserReference[]) => {
     let csvHeader = visibleColumnData
       .map((item: ColumnData) => (item.text))
       .join(',');
 
     csvHeader += '\n';
 
-    const { data, sortedAndFiltratedDataRef } = store.getState();
-    const visibleColumns = visibleColumnData.map((item: ColumnData) => (item.fieldName));
+    const visibleColumnNames = visibleColumnData.map((item: ColumnData) => (item.fieldName));
 
-    const csvData = sortedAndFiltratedDataRef.map((userRef: UserReference) => {
-      let rowStr = '';
-      const user: User = data[userRef.userIndex];
-      for (let i = 0; i < visibleColumns.length; i += 1) {
-        rowStr += user[visibleColumns[i]];
-        rowStr += ',';
-      }
-      rowStr = rowStr.slice(0, -1);
-      return rowStr;
-    });
+    const csvData: string[] = sortedAndFiltratedDataRef
+      .map((userRef: UserReference) => {
+        let rowStr = '';
+        const user: User = data[userRef.userIndex];
+        for (let i = 0; i < visibleColumnNames.length; i += 1) {
+          rowStr += user[visibleColumnNames[i]];
+          rowStr += ',';
+        }
+        rowStr = rowStr.slice(0, -1);
+        return rowStr;
+      });
 
-    const csvContent = `data:text/csv;charset=utf-8,${csvHeader}${csvData.join('\n')}`;
+    return `${csvHeader}${csvData.join('\n')}`;
+  },
+);
+
+const BottomPanel = () => {
+  const isVirtualizeOn: boolean = useSelector(
+    (state: ReduxStorage) => state.isVirtualizeOn,
+  );
+
+  const csvText: string = useSelector(selectCsvText);
+
+  function exportToCsv() {
+    const csvContent = `data:text/csv;charset=utf-8,${csvText}`;
 
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement('a');
@@ -50,7 +75,7 @@ const BottomPanel = (props: any) => {
     <>
       <div className="bottom-panel">
         <div className="bottom-panel__column">
-          <span>Virtuallization off/on</span>
+          <span>Virtulization</span>
           <Switch
             checked={isVirtualizeOn}
             onChange={toggleVirtualization}
@@ -60,9 +85,13 @@ const BottomPanel = (props: any) => {
           />
         </div>
         <div className="bottom-panel__column">
-          <div>Hotkeys:</div>
-          <div>SHIFT and click on table header to sort by multiple columns</div>
-          <div>SHIFT and click on table row to select multiple rows</div>
+          <MuiThemeProvider theme={theme}>
+            <Tooltip
+              title="Shift + click on table header to sort by multiple columns. Shift + click on table row to select multiple rows"
+            >
+              <div>HOTKEYS</div>
+            </Tooltip>
+          </MuiThemeProvider>
         </div>
       </div>
       <div className="bottom-panel">
@@ -81,8 +110,4 @@ const BottomPanel = (props: any) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  isVirtualizeOn: state.isVirtualizeOn,
-});
-
-export default connect(mapStateToProps)(BottomPanel);
+export default BottomPanel;

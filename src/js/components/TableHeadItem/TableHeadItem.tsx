@@ -3,13 +3,16 @@ import { TableCell } from '@material-ui/core';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import './TableHeadItem.scss';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { applyAdditionalPriority, applyFirstPriority } from '../../actions/actions';
+import { ReduxStorage, SortParameter } from '../../store/types';
 
 const TableHeadItem = ({
-  type, text, columnId, allSortParameters,
+  type, text, columnId,
 }: any) => {
-  const sortParams = allSortParameters.filter((value) => value.columnId === columnId);
+  const sortParams: SortParameter[] = useSelector(
+    (state: ReduxStorage) => state.sortParameters.filter((value) => value.columnId === columnId),
+  );
 
   function handleTableHeadCellClick(event) {
     if (event.shiftKey) {
@@ -38,8 +41,4 @@ const TableHeadItem = ({
   );
 };
 
-const mapStateToProps = (state: any) => ({
-  allSortParameters: state.sortParameters,
-});
-
-export default connect(mapStateToProps)(TableHeadItem);
+export default TableHeadItem;

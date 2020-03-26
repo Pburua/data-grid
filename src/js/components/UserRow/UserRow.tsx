@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import faker from 'faker';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
@@ -14,15 +14,18 @@ import { removeUserSelection } from '../../reducers/utils';
 interface UserRowProps {
   index: number,
   style: any,
-  columnData: ColumnData[],
-  data: User[],
-  sortedAndFiltratedDataRef: UserReference[],
 }
 
-const UserRow = ({
-  index, style, columnData, data, sortedAndFiltratedDataRef,
-}: UserRowProps) => {
-  const visibleColumns = [...columnData].filter((value: ColumnData) => value.visible);
+const UserRow = ({ index, style }: UserRowProps) => {
+  const visibleColumns: ColumnData[] = useSelector(
+    (state: ReduxStorage) => [...state.columnData].filter((value: ColumnData) => value.visible),
+  );
+  const data: User[] = useSelector(
+    (state: ReduxStorage) => state.data,
+  );
+  const sortedAndFiltratedDataRef: UserReference[] = useSelector(
+    (state: ReduxStorage) => state.sortedAndFiltratedDataRef,
+  );
 
   if (index === 0) {
     return (
@@ -73,10 +76,4 @@ const UserRow = ({
   );
 };
 
-const mapStateToProps = (state: ReduxStorage) => ({
-  data: state.data,
-  sortedAndFiltratedDataRef: state.sortedAndFiltratedDataRef,
-  columnData: state.columnData,
-});
-
-export default connect(mapStateToProps)(UserRow);
+export default UserRow;
