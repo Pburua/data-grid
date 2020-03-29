@@ -11,6 +11,13 @@
     background: #b4b1e5;
    }
   }
+
+  & .table__cell:first-of-type {
+   position: sticky;
+   left: 0;
+   background: white;
+   z-index: 2;
+  }
  }
 
  &__cell {
