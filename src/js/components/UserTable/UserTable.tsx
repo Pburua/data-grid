@@ -10,6 +10,8 @@ import './UserTable.scss';
 import { useSelector } from 'react-redux';
 import { ReduxStorage } from '../../store/types';
 import RowWrapper from '../RowWrapper/RowWrapper';
+import UserRow from '../UserRow/UserRow';
+import HeaderRow from '../HeaderRow/HeaderRow';
 
 function UnVirtualizedList(itemCount) {
   const rows: JSX.Element [] = [];
@@ -26,6 +28,17 @@ function UnVirtualizedList(itemCount) {
   );
 }
 
+function RowRenderer({ children, style }: any) {
+  return (
+    <div style={style}>
+      <HeaderRow
+        key={0}
+      />
+      {children}
+    </div>
+  );
+}
+
 function VirtualizedListWrapper(length) {
   const defaultRowHeight = 53;
   return (
@@ -37,8 +50,9 @@ function VirtualizedListWrapper(length) {
           itemCount={length}
           itemSize={defaultRowHeight}
           autoRefresh={{}}
+          innerElementType={RowRenderer}
         >
-          {RowWrapper}
+          {UserRow}
         </VirtualizedList>
       )}
     </AutoSizer>
