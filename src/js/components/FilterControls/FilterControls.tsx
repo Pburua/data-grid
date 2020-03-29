@@ -10,12 +10,34 @@ import {
   MenuItem,
   Select,
   TextField,
+  MuiThemeProvider,
 } from '@material-ui/core';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { updateColumnData, updateFilters } from '../../actions/actions';
 import './FilterControls.scss';
 import { ColumnData, FilterCriteria, ReduxStorage } from '../../store/types';
+
+const theme = createMuiTheme({
+  overrides: {
+    // @ts-ignore
+    MuiToggleButton: {
+      root: {
+        '&:hover': {
+          'background-color': '#93a6ff',
+        },
+        '&$selected': {
+          'background-color': '#3f51b5',
+          color: 'white',
+        },
+        '&$selected:hover': {
+          'background-color': '#3f51b5 !important',
+        },
+      },
+    },
+  },
+});
 
 const isActiveValues = [
   {
@@ -123,24 +145,26 @@ const FilterControls = () => {
       </div>
 
       <div className="filter-controls__item">
-        <ToggleButtonGroup
-          className="filter-controls__item"
-          value={filterCriteria.isActive}
-          size="small"
-          exclusive
-          onChange={handleIsActiveChange}
-          aria-label="text alignment"
-        >
-          {isActiveValues.map((option) => (
-            <ToggleButton
-              key={option.value}
-              value={option.value}
-              selected={option.value === filterCriteria.isActive}
-            >
-              {option.label}
-            </ToggleButton>
-          ))}
-        </ToggleButtonGroup>
+        <MuiThemeProvider theme={theme}>
+          <ToggleButtonGroup
+            className="filter-controls__item"
+            value={filterCriteria.isActive}
+            size="small"
+            exclusive
+            onChange={handleIsActiveChange}
+            aria-label="text alignment"
+          >
+            {isActiveValues.map((option) => (
+              <ToggleButton
+                key={option.value}
+                value={option.value}
+                selected={option.value === filterCriteria.isActive}
+              >
+                {option.label}
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+        </MuiThemeProvider>
       </div>
 
       <div className="filter-controls__item">
@@ -159,7 +183,7 @@ const FilterControls = () => {
           >
             {frameworkValues.map((option) => (
               <MenuItem key={option.value} value={option.value}>
-                <Checkbox checked={filterCriteria.frameworks.includes(option.value)} />
+                <Checkbox checked={filterCriteria.frameworks.includes(option.value)} color="primary" />
                 <ListItemText primary={option.label} />
               </MenuItem>
             ))}
@@ -185,7 +209,7 @@ const FilterControls = () => {
           >
             {columnData.map((option: ColumnData) => (
               <MenuItem key={option.fieldName} value={option.fieldName}>
-                <Checkbox checked={option.visible} />
+                <Checkbox checked={option.visible} color="primary" />
                 <ListItemText primary={option.text} />
               </MenuItem>
             ))}

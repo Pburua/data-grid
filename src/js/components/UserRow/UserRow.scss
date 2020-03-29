@@ -5,17 +5,25 @@
 
   &:not(.table-head) {
    &:hover {
-    background: #e5e5e5;
+    background: #93a6ff;
+
+    .table__cell {
+     background: #93a6ff;
+    }
    }
    &.selected {
-    background: #b4b1e5;
+    background: #3f51b5;
+
+    .table__cell {
+     background: #3f51b5;
+     color: white;
+    }
    }
   }
 
   & .table__cell:first-of-type {
    position: sticky;
    left: 0;
-   background: white;
    z-index: 2;
   }
  }
@@ -24,6 +32,7 @@
   flex: 1 !important;
   text-align: center;
   border-right: 1px solid rgba(224, 224, 224, 1);
+  background: white;
 
   &.name {
    min-width: 150px;

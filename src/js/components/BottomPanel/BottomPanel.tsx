@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import {
-  Button, MuiThemeProvider, Switch, Tooltip,
+  Button, Card, MuiThemeProvider, Switch, Tooltip,
 } from '@material-ui/core';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { deleteSelectedRows, toggleVirtualization } from '../../actions/actions';
@@ -16,6 +16,13 @@ const theme = createMuiTheme({
     MuiTooltip: {
       tooltip: {
         fontSize: '1em',
+      },
+    },
+    MuiCard: {
+      root: {
+        width: 'min-content',
+        margin: 'auto',
+        padding: '5px',
       },
     },
   },
@@ -72,41 +79,42 @@ const BottomPanel = () => {
   }
 
   return (
-    <>
+    <MuiThemeProvider theme={theme}>
       <div className="bottom-panel">
         <div className="bottom-panel__column">
-          <span>Virtulization</span>
-          <Switch
-            checked={isVirtualizeOn}
-            onChange={toggleVirtualization}
-            value="checkedB"
-            color="default"
-            inputProps={{ 'aria-label': 'primary checkbox' }}
-          />
-        </div>
-        <div className="bottom-panel__column">
-          <MuiThemeProvider theme={theme}>
-            <Tooltip
-              title="Shift + click on table header to sort by multiple columns. Shift + click on table row to select multiple rows"
-            >
-              <div>HOTKEYS</div>
-            </Tooltip>
-          </MuiThemeProvider>
-        </div>
-      </div>
-      <div className="bottom-panel">
-        <div className="bottom-panel__column">
-          <Button onClick={deleteSelectedRows} variant="contained" color="default">
+          <Button onClick={deleteSelectedRows} variant="contained" color="primary">
             Delete selected rows
           </Button>
         </div>
         <div className="bottom-panel__column">
-          <Button onClick={exportToCsv} variant="contained" color="default">
+          <Card>
+            <div style={{ width: 'max-content' }}>
+              <span>Virtulization</span>
+              <Switch
+                checked={isVirtualizeOn}
+                onChange={toggleVirtualization}
+                value="checkedB"
+                color="primary"
+                inputProps={{ 'aria-label': 'primary checkbox' }}
+              />
+            </div>
+          </Card>
+        </div>
+        <div className="bottom-panel__column">
+          <Tooltip
+            disableFocusListener
+            title="Shift + click on table header to sort by multiple columns. Shift + click on table row to select multiple rows"
+          >
+            <Card>HOTKEYS</Card>
+          </Tooltip>
+        </div>
+        <div className="bottom-panel__column">
+          <Button onClick={exportToCsv} variant="contained" color="primary">
             Export table to .csv
           </Button>
         </div>
       </div>
-    </>
+    </MuiThemeProvider>
   );
 };
 
