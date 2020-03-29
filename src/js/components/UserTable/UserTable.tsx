@@ -8,15 +8,15 @@ import { FixedSizeList as VirtualizedList } from 'react-window';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import './UserTable.scss';
 import { useSelector } from 'react-redux';
-import UserRow from '../UserRow/UserRow';
 import { ReduxStorage } from '../../store/types';
+import RowWrapper from '../RowWrapper/RowWrapper';
 
-function UnVirtualizedList(Row, itemCount) {
+function UnVirtualizedList(itemCount) {
   const rows: JSX.Element [] = [];
 
   for (let i = 0; i < itemCount; i += 1) {
     faker.seed(i);
-    rows.push(<Row key={faker.name.findName()} index={i} />);
+    rows.push(<RowWrapper key={faker.name.findName()} index={i} />);
   }
 
   return (
@@ -38,7 +38,7 @@ function VirtualizedListWrapper(length) {
           itemSize={defaultRowHeight}
           autoRefresh={{}}
         >
-          {UserRow}
+          {RowWrapper}
         </VirtualizedList>
       )}
     </AutoSizer>
@@ -61,7 +61,7 @@ const UserTable = () => {
         <TableBody className="table__body" component="div">
           {isVirtualizeOn
             ? VirtualizedListWrapper(displayingDataLength)
-            : UnVirtualizedList(UserRow, displayingDataLength)}
+            : UnVirtualizedList(displayingDataLength)}
         </TableBody>
 
       </Table>

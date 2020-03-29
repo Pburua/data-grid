@@ -2,7 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import TableHeadItem from '../TableHeadItem/TableHeadItem';
 import './UserRow.scss';
 import { toggleRowSelection } from '../../actions/actions';
 import {
@@ -27,18 +26,7 @@ const UserRow = ({ index, style }: UserRowProps) => {
   );
 
   if (index === 0) {
-    return (
-      <TableRow className="table__row table-head" key={0} component="div">
-        {visibleColumns.map((value) => (
-          <TableHeadItem
-            key={value.fieldName}
-            columnId={value.fieldName}
-            type={value.type}
-            text={value.text}
-          />
-        ))}
-      </TableRow>
-    );
+    return null;
   }
 
   // index is decreased by 1 to render a header as a virtualized row
