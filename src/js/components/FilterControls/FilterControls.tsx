@@ -102,10 +102,25 @@ const FilterControls = () => {
     });
   }
 
-  function handleSearchTextBlur() {
+  function updateFilterByText() {
     // eslint-disable-next-line max-len
     if (searchText.toLowerCase() !== filterCriteria.searchText) update({ searchText: searchText.toLowerCase() });
   }
+
+  function handleSearchTextBlur() {
+    updateFilterByText();
+  }
+
+  function handleSearchEnterPress(event) {
+    if (event.code === 'Enter') updateFilterByText();
+  }
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleSearchEnterPress, false);
+    return () => {
+      document.removeEventListener('keydown', handleSearchEnterPress, false);
+    };
+  });
 
   function handleSearchTextChange(event) {
     setSearchText(event.target.value);

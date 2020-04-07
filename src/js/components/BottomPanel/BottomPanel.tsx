@@ -15,7 +15,7 @@ const theme = createMuiTheme({
   overrides: {
     MuiTooltip: {
       tooltip: {
-        fontSize: '1em',
+        fontSize: '0.9em',
       },
     },
     MuiCard: {
@@ -103,7 +103,7 @@ const BottomPanel = () => {
         <div className="bottom-panel__column">
           <Tooltip
             disableFocusListener
-            title="Shift + click on table header to sort by multiple columns. Shift + click on table row to select multiple rows"
+            title="Press Enter to run filter. Shift + click on table header to sort by multiple columns. Shift + click on table row to select multiple rows"
           >
             <Card>HOTKEYS</Card>
           </Tooltip>
