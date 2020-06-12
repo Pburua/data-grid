@@ -1,0 +1,17 @@
+.filter-controls {
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ height: 100px;
+
+ &__item {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ }
+
+ &__multiple-checkbox {
+  width: 163px !important;
+ }
+}

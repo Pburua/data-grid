@@ -1,0 +1,74 @@
+.table {
+
+ &__row {
+  display: flex !important;
+
+  &:not(.table-head) {
+   &:hover {
+    background: #93a6ff;
+
+    .table__cell {
+     background: #93a6ff;
+    }
+   }
+   &.selected {
+    background: #3f51b5;
+
+    .table__cell {
+     background: #3f51b5;
+     color: white;
+    }
+   }
+  }
+
+  & .table__cell:first-of-type {
+   position: sticky;
+   left: 0;
+   z-index: 2;
+  }
+ }
+
+ &__cell {
+  flex: 1 !important;
+  text-align: center;
+  border-right: 1px solid rgba(224, 224, 224, 1);
+  background: white;
+
+  &.name {
+   min-width: 150px;
+   text-align: left;
+   overflow: hidden;
+   white-space: nowrap;
+   text-overflow: ellipsis;
+   text-transform: capitalize;
+  }
+
+  &.int {
+   min-width: 100px;
+   text-align: right;
+  }
+
+  &.bool {
+   min-width: 80px;
+   text-align: center;
+  }
+
+  &.enum {
+   min-width: 100px;
+   text-align: center;
+  }
+
+  &.date {
+   min-width: 170px;
+   text-align: center;
+  }
+
+  &.head {
+   text-align: center;
+  }
+ }
+
+ &__body {
+ }
+
+}

@@ -1,0 +1,19 @@
+.bottom-panel {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+
+ &__column {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+
+  &:first-child {
+   text-align: left;
+  }
+
+  &:last-child {
+   text-align: right;
+  }
+ }
+}

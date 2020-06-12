@@ -1,0 +1,46 @@
+.table-head {
+ position: sticky !important;
+ top: 0;
+ background: white;
+ position: -webkit-sticky !important;
+ z-index: 3;
+ user-select: none;
+
+ &__cell {
+  display: flex !important;
+
+  &:hover {
+   background: #e5e5e5;
+   cursor: pointer;
+  }
+ }
+
+ &__text {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 10px;
+ }
+
+ &__sort-controls {
+  flex: 1;
+  display: flex;
+ }
+}
+
+.sort-controls {
+ height: 20px;
+
+ &__icon {
+
+ }
+
+ &__priority {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+ }
+
+}
